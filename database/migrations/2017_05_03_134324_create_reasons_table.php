@@ -16,8 +16,7 @@ class CreateReasonsTable extends Migration
         Schema::create('reasons', function (Blueprint $table) {
             $table->increments('id');
             $table->string('reason');
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp();
         });
     }
 
@@ -28,6 +27,6 @@ class CreateReasonsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reasons');
+        Schema::dropIfExists('reason');
     }
 }

@@ -28,6 +28,6 @@ class CreateReasonListsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reason_lists');
+        Schema::dropIfExists('reason_list');
     }
 }
