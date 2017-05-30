@@ -30,7 +30,7 @@
 		<img src="/images/{{ Session::get('path') }}">
 		@endif
 
-		<form action="{{ url('categories/add') }}" enctype="multipart/form-data" method="POST">
+		<form action="{{ url('api/virtualmarket/categories/add') }}" enctype="multipart/form-data" method="POST">
 			{{ csrf_field() }}
 			<input type="hidden" name="id" value="{{isset($category->id)? $category->id:''}}">
 			<div class="row">

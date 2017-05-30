@@ -19,6 +19,7 @@ class CreateGarendongsTable extends Migration
             $table->integer('number_of_allocation')->default(0);
             $table->integer('status')->default(1);
             $table->integer('rating');
+            $table->integer('num_rating');
             $table->timestamps();
         });
     }

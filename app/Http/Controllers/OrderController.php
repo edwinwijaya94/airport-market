@@ -10,13 +10,10 @@ use DateTime;
 class OrderController extends Controller {
 
     public function addOrder(Request $request) {
+        //add order to database
     	$order = new Order();
-        $order->order_at = new DateTime();
-        //$order->order_at = date("Y-m-d H:i:s");
+        $order->customer_id = $request->customer_id;
         $order->total_product = $request->total_product;        
-    	$order->buyer_id = $request->buyer_id;
-        $order->garendong_id = 0;
-        $order->orderstatus_id = $request->orderstatus_id;
         $order->order_type = "mobile";
         $order->save();
         //get order id after insert the order to database
@@ -25,11 +22,23 @@ class OrderController extends Controller {
     }
 
     public function getAllOrder() {
-        //retrieve all categories from datbase
+        //retrieve all orders from datbase
         $orders = Order::all();
         
         return Response::json(array(
             'orders'=>$orders->toArray()),
+            200
+        );
+    }
+
+    function getOrder(Request $request, $id) {
+        //retrieve order by id from database
+        $status = Order::find($id);
+
+
+        return Response::json(array(
+            'error'=>false,
+            'status'=>$status),
             200
         );
     }

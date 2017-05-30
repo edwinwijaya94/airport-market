@@ -21,7 +21,7 @@ class ProductController extends Controller {
     	//retrieve all products based on cateory
     	$products = Category::find($id)->products;
         foreach($products as $product)
-            $product->unit_id = $product->unit->unit;
+            $product->default_unit_id = $product->unit->unit;
 
     	return Response::json(array(
     		'error'=> false,
@@ -42,7 +42,7 @@ class ProductController extends Controller {
 
     public function getProduct(Request $request, $id) {
     	$detail = Product::find($id);
-        $detail->unit_id = $detail->unit->unit;
+        $detail->default_unit_id = $detail->unit->unit;
 
     	return Response::json(array(
     		'error'=>false,
@@ -54,7 +54,7 @@ class ProductController extends Controller {
     public function getSearchProduct(Request $request, $keyword) {
         $results = Product::where('name', 'LIKE', '%'.$keyword.'%')->get();
         foreach($results as $result)
-            $result->unit_id = $result->unit->unit;
+            $result->default_unit_id = $result->unit->unit;
 
         return Response::json(array(
             'error'=>false,
@@ -73,40 +73,41 @@ class ProductController extends Controller {
         $converterObject = Converter::find($unit_id);
         if ($unit->unit_type == 'common') {
             //search id for unit gram
-            $unit_gram = DB::table('unit')
+            $unit_gram = DB::table('units')
                      ->where('unit', 'gram')
                      ->first();
             $default_unit = $unit_gram->id;
             $converter = $converterObject->in_gram;
             $quantity_in_gram = $quantity * $converter;
-            $price = ($quantity_in_gram/$default_quantity) * $request->product_price;
-        } else if ($unit->unit_type == 'not common')  {
+            $price = ($default_quantity/$quantity_in_gram) * $request->product_price;
+        } else if ($unit->unit_type == 'uncommon')  {
             $default_quantity = 1;
             $default_unit = $unit_id;
-            $price = ($quantity/$default_quantity) * $request->product_price;
+            $price = ($default_quantity/$quantity) * $request->product_price;
         }
+        $price = round($price); //round price
 
         $product = Product::find($id);
         //delete old image
         $oldImage = $product->file_img;
-        $pathFile = public_path('images/vegetables/') . $oldImage;
+        $pathFile = public_path('images/products/') . $oldImage;
         var_dump($pathFile);
         File::delete($pathFile);
         //add image to folder images
         $fileImage = $request->product_image;
         $imageName = time().'_'.$fileImage->getClientOriginalName();
-        $fileImage->move(public_path('images/vegetables/'), $imageName);
+        $fileImage->move(public_path('images/products/'), $imageName);
         //add product to database
         $product->name = $request->product_name;
-        $product->quantity = $default_quantity;
-        $product->unit_id = $default_unit;
+        $product->default_quantity = $default_quantity;
+        $product->default_unit_id = $default_unit;
         //compare price update with price in table for price min and price max
         if ($price < $product->price_min) {
             $product->price_min = $price;
         } else if ($price > $product->price_max) {
             $product->price_max = $price;
         }
-        $product->file_img = $imageName;
+        $product->product_img = $imageName;
         $product->category_id = $request->category_id;
         $product->save();
 
@@ -128,32 +129,33 @@ class ProductController extends Controller {
         // set default quantity based on unit type
         if ($unit->unit_type == 'common') {
             //search id for unit gram
-            $unit_gram = DB::table('unit')
+            $unit_gram = DB::table('units')
                      ->where('unit', 'gram')
                      ->first();
             $default_unit = $unit_gram->id;
             $converter = $converterObject->in_gram;
             $quantity_in_gram = $quantity * $converter;
-            $price = ($quantity_in_gram/$default_quantity) * $request->product_price;
-        } else if ($unit->unit_type == 'not common')  {
+            $price = ($default_quantity/$quantity_in_gram) * $request->product_price;
+        } else if ($unit->unit_type == 'uncommon')  {
             $default_quantity = 1;
             $default_unit = $unit_id;
-            $price = ($quantity/$default_quantity) * $request->product_price;
+            $price = ($default_quantity/$quantity) * $request->product_price;
         }
+        $price = round($price);
 
         //add image to folder images
         $fileImage = $request->product_image;
         $imageName = time().'_'.$fileImage->getClientOriginalName();
-        $fileImage->move(public_path('images/vegetables'), $imageName);
+        $fileImage->move(public_path('images/products'), $imageName);
 
         //add product to database
     	$product = new Product();
     	$product->name = $request->product_name;
-    	$product->quantity = $default_quantity;
-        $product->unit_id = $default_unit;
+    	$product->default_quantity = $default_quantity;
+        $product->default_unit_id = $default_unit;
     	$product->price_min = $price;
         $product->price_max = $price;    	
-    	$product->file_img = $imageName;
+    	$product->product_img = $imageName;
     	$product->category_id = $request->category_id;
         $product->save();
 

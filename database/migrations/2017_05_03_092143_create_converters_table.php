@@ -28,6 +28,6 @@ class CreateConvertersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('converter');
+        Schema::dropIfExists('converters');
     }
 }

@@ -9,6 +9,6 @@ class Product extends Model
     public $table = "products";
 
     public function unit() {
-    	return $this->belongsTo('App\Unit');
+    	return $this->belongsTo('App\Unit', 'default_unit_id');
     }
 }

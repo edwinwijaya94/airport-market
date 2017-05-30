@@ -11,20 +11,20 @@ class OrderLineController extends Controller
     public function addOrderLine(Request $request, $id) {
         $order_line = json_decode($request->order_line, true);
         foreach ($order_line as $item) {
-            $shoppingList = new ShoppingList();
-            $shoppingList->order_id = $id;
-            $shoppingList->product_id = $item['productId'];
-            $shoppingList->quantity = $item['quantity'];
-            $shoppingList->unit = $item['unit'];
-            $shoppingList->is_priority = $item['isPriority'];
-            $shoppingList->save();
+            $orderLine = new OrderLine();
+            $orderLine->order_id = $id;
+            $orderLine->product_id = $item['productId'];
+            $orderLine->quantity = $item['quantity'];
+            $orderLine->unit_id = $item['unitId'];
+            $orderLine->is_priority = $item['isPriority'];
+            $orderLine->save();
         }
-        return "Order Anda berhasil dimasukan";
+        return "Pesanan Anda berhasil diproses";
     }
 
     public function getAllOrderLine() {
         //retrieve all categories from datbase
-        $orderline = ShoppingList::all();
+        $orderline = OrderLine::all();
         
         return Response::json(array(
             'orderline'=>$orderline->toArray()),

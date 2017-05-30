@@ -32,6 +32,6 @@ class CreateOrderLinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shopping_list');
+        Schema::dropIfExists('order_lines');
     }
 }

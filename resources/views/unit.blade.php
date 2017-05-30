@@ -30,7 +30,7 @@
 		<img src="/images/{{ Session::get('path') }}">
 		@endif
 
-		<form action="{{ url('units/add') }}" enctype="multipart/form-data" method="POST">
+		<form action="{{ url('api/virtualmarket/units/add') }}" enctype="multipart/form-data" method="POST">
 			{{ csrf_field() }}
 			<div class="row">
 				<div class="col-md-12">

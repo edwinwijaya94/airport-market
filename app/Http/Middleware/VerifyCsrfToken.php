@@ -13,7 +13,7 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
         //Add order and order line
-    	'/order/add',
-    	'/order/add/*',
+    	'api/virtualmarket/order/add',
+    	'api/virtualmarket/order/add/*',
     ];
 }

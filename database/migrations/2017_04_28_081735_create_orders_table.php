@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->integer('customer_id');
             $table->integer('total_product');
+            $table->string('order_type');
             $table->integer('total_price')->default(0);
             $table->integer('garendong_id')->default(0);
             $table->integer('order_status')->default(1);
@@ -31,6 +32,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order');
+        Schema::dropIfExists('orders');
     }
 }

@@ -16,7 +16,7 @@ class CreateUserFeedbacksTable extends Migration
         Schema::create('user_feedbacks', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id');
-            $table->integer('rating');
+            $table->integer('reason_id');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateUserFeedbacksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_feedback');
+        Schema::dropIfExists('user_feedbacks');
     }
 }

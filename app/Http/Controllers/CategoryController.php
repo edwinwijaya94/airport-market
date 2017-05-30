@@ -42,7 +42,7 @@ class CategoryController extends Controller {
         $fileImage->move(public_path('images/categories'), $imageName);
         //add category to database
         $category->name = $request->category_name;
-        $category->file_img = $imageName;
+        $category->category_img = $imageName;
         $category->save();
 
         return Response::json(array(
@@ -55,7 +55,7 @@ class CategoryController extends Controller {
     public function updateCategory(Request $request, $id) {
 		$category = Category::find($id);
 		//delete old image
-		$oldImage = $category->file_img;
+		$oldImage = $category->category_img;
         $pathFile = public_path('images/categories/') . $oldImage;
         File::delete($pathFile);
 		//add image to folder images
@@ -64,7 +64,7 @@ class CategoryController extends Controller {
         $fileImage->move(public_path('images/categories'), $imageName);
         //add category to database
 		$category->name = $request->category_name;
-		$category->file_img = $imageName;
+		$category->category_img = $imageName;
 		$category->save();
 
 		return Response::json(array(

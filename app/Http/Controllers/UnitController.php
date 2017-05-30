@@ -26,7 +26,7 @@ class UnitController extends Controller {
     public function getUnit(Request $request, $id) {
         //retrieve unit based on id
         $unit = Unit::find($id);
-
+        
         return Response::json(array(
             'error'=>false,
             'unit'=>$unit),
@@ -45,7 +45,7 @@ class UnitController extends Controller {
 
         if($unit->unit_type == "common") {
             return redirect()->action('ConverterController@addConverter', ['unit_id' => $unit_id, 'gram' => $convert_gram ]);
-        } else if($unit->unit_type == "not common") {
+        } else if($unit->unit_type == "uncommon") {
             return Response::json(array(
                 'error'=>false,
                 'message'=>"Unit berhasil ditambahkan"),
@@ -68,7 +68,7 @@ class UnitController extends Controller {
         } if ($unit->unit_type != $unitNow ) {
             if ($unitNow == "common") {
                 return redirect()->action('ConverterController@addConverter', ['unit_id' => $id, 'gram' => $convert_gram ]);
-            } else if ($unitNow == "not common") {
+            } else if ($unitNow == "uncommon") {
                 //delete unit from converter
                 // return redirect()->action('ConverterController@addConverter', ['unit_id' => $unit_id, 'gram' => $convert_gram ]);
             }
