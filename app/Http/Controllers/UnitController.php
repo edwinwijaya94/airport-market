@@ -62,6 +62,8 @@ class UnitController extends Controller {
         $unit->unit = $request->unit_name;
         $unitNow = $request->unit_type;
         $convert_gram = $request->convert_gram;
+        $unit->unit_type = $unitNow;
+        $unit->save();
         //update based on unit type
         if ($unit->unit_type == $unitNow) {
             if ($unit->unit_type == "common") {                
@@ -74,8 +76,6 @@ class UnitController extends Controller {
                 //delete unit from converter
                 // return redirect()->action('ConverterController@addConverter', ['unit_id' => $unit_id, 'gram' => $convert_gram ]);
             }
-        }
-        $unit->unit_type = $unitNow;
-        $unit->save();
+        }        
     }
 }
