@@ -142,7 +142,6 @@ class ProductController extends Controller {
         if($isChangeImage) {
             //delete old image
             $pathFile = public_path('images/products/') . $oldImage;
-            var_dump($pathFile);
             File::delete($pathFile);
             //add image to folder images
             $fileImage = $request->product_image;
