@@ -65,7 +65,7 @@ class UnitController extends Controller {
         //update based on unit type
         if ($unit->unit_type == $unitNow) {
             if ($unit->unit_type == "common") {                
-                return redirect()->action('ConverterController@editConverter', ['unit_id' => $id, 'gram' => $convert_gram ]);
+                return redirect()->action('ConverterController@updateConverter', ['unit_id' => $id, 'gram' => $convert_gram ]);
             }
         } if ($unit->unit_type != $unitNow ) {
             if ($unitNow == "common") {
