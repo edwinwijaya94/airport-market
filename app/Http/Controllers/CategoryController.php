@@ -53,15 +53,21 @@ class CategoryController extends Controller {
     }
 
     public function updateCategory(Request $request, $id) {
-		$category = Category::find($id);
-		//delete old image
-		$oldImage = $category->category_img;
-        $pathFile = public_path('images/categories/') . $oldImage;
-        File::delete($pathFile);
-		//add image to folder images
-		$fileImage = $request->category_image;
-		$imageName = time().'_'.$fileImage->getClientOriginalName();        
-        $fileImage->move(public_path('images/categories'), $imageName);
+        $category = Category::find($id);
+        $oldImage = $category->category_img;
+        //check image update or not
+        $isChangeImage = $request->isChangeImage;
+        if($isChangeImage) {
+            //delete old image
+            $pathFile = public_path('images/categories/') . $oldImage;
+            File::delete($pathFile);
+            //add image to folder images
+            $fileImage = $request->category_image;
+            $imageName = time().'_'.$fileImage->getClientOriginalName();        
+            $fileImage->move(public_path('images/categories'), $imageName);
+        } else {
+            $imageName = $oldImage;
+        }
         //add category to database
 		$category->name = $request->category_name;
 		$category->category_img = $imageName;

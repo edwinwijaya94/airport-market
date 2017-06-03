@@ -63,61 +63,6 @@ class ProductController extends Controller {
         );
     }
 
-    public function updateProduct(Request $request, $id) {
-        //set default value
-        $default_quantity = 100;
-        // convert price to 100/gram
-        $quantity = $request->product_quantity;
-        $unit_id = $request->unit_id;
-        $unit = Unit::find($unit_id);
-        $converterObject = Converter::find($unit_id);
-        if ($unit->unit_type == 'common') {
-            //search id for unit gram
-            $unit_gram = DB::table('units')
-                     ->where('unit', 'gram')
-                     ->first();
-            $default_unit = $unit_gram->id;
-            $converter = $converterObject->in_gram;
-            $quantity_in_gram = $quantity * $converter;
-            $price = ($default_quantity/$quantity_in_gram) * $request->product_price;
-        } else if ($unit->unit_type == 'uncommon')  {
-            $default_quantity = 1;
-            $default_unit = $unit_id;
-            $price = ($default_quantity/$quantity) * $request->product_price;
-        }
-        $price = round($price); //round price
-
-        $product = Product::find($id);
-        //delete old image
-        $oldImage = $product->file_img;
-        $pathFile = public_path('images/products/') . $oldImage;
-        var_dump($pathFile);
-        File::delete($pathFile);
-        //add image to folder images
-        $fileImage = $request->product_image;
-        $imageName = time().'_'.$fileImage->getClientOriginalName();
-        $fileImage->move(public_path('images/products/'), $imageName);
-        //add product to database
-        $product->name = $request->product_name;
-        $product->default_quantity = $default_quantity;
-        $product->default_unit_id = $default_unit;
-        //compare price update with price in table for price min and price max
-        if ($price < $product->price_min) {
-            $product->price_min = $price;
-        } else if ($price > $product->price_max) {
-            $product->price_max = $price;
-        }
-        $product->product_img = $imageName;
-        $product->category_id = $request->category_id;
-        $product->save();
-
-        return Response::json(array(
-            'error'=>false,
-            'message'=>"Produk berhasil diubah"),
-            200
-        );
-    }
-
     public function addProduct(Request $request) {
         //set default value
         $default_quantity = 100;
@@ -164,6 +109,67 @@ class ProductController extends Controller {
     		'message'=>"Produk berhasil ditambahkan"),
     		200
     	);
+    }
+
+    public function updateProduct(Request $request, $id) {
+        //set default value
+        $default_quantity = 100;
+        // convert price to 100/gram
+        $quantity = $request->product_quantity;
+        $unit_id = $request->unit_id;
+        $unit = Unit::find($unit_id);
+        $converterObject = Converter::find($unit_id);
+        if ($unit->unit_type == 'common') {
+            //search id for unit gram
+            $unit_gram = DB::table('units')
+                     ->where('unit', 'gram')
+                     ->first();
+            $default_unit = $unit_gram->id;
+            $converter = $converterObject->in_gram;
+            $quantity_in_gram = $quantity * $converter;
+            $price = ($default_quantity/$quantity_in_gram) * $request->product_price;
+        } else if ($unit->unit_type == 'uncommon')  {
+            $default_quantity = 1;
+            $default_unit = $unit_id;
+            $price = ($default_quantity/$quantity) * $request->product_price;
+        }
+        $price = round($price); //round price
+        // image section
+        $product = Product::find($id);
+        $oldImage = $product->product_img;
+        // check images update or not
+        $isChangeImage = $request->isChangeImage;
+        if($isChangeImage) {
+            //delete old image
+            $pathFile = public_path('images/products/') . $oldImage;
+            var_dump($pathFile);
+            File::delete($pathFile);
+            //add image to folder images
+            $fileImage = $request->product_image;
+            $imageName = time().'_'.$fileImage->getClientOriginalName();
+            $fileImage->move(public_path('images/products/'), $imageName);
+        } else {
+            $imageName = $oldImage;
+        }
+        //add product to database
+        $product->name = $request->product_name;
+        $product->default_quantity = $default_quantity;
+        $product->default_unit_id = $default_unit;
+        //compare price update with price in table for price min and price max
+        if ($price < $product->price_min) {
+            $product->price_min = $price;
+        } else if ($price > $product->price_max) {
+            $product->price_max = $price;
+        }
+        $product->product_img = $imageName;
+        $product->category_id = $request->category_id;
+        $product->save();
+
+        return Response::json(array(
+            'error'=>false,
+            'message'=>"Produk berhasil diubah"),
+            200
+        );
     }
 }
 
