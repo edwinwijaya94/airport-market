@@ -75,7 +75,7 @@ class UnitController extends Controller {
                 // return redirect()->action('ConverterController@addConverter', ['unit_id' => $unit_id, 'gram' => $convert_gram ]);
             }
         }
-        $unit->unit_type == $unitNow;
+        $unit->unit_type = $unitNow;
         $unit->save();
     }
 }
