@@ -26,10 +26,12 @@ class UnitController extends Controller {
     public function getUnit(Request $request, $id) {
         //retrieve unit based on id
         $unit = Unit::find($id);
+        $converter = Converter::where('unit_id', $id)->first();
         
         return Response::json(array(
             'error'=>false,
-            'unit'=>$unit),
+            'unit'=>$unit,
+            'converter' => $converter),
             200
         );
     }
