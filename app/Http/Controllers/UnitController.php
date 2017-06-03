@@ -59,17 +59,18 @@ class UnitController extends Controller {
     public function updateUnit(Request $request, $id) {
         //update unit to database
         $unit = Unit::find($id);
-        $unit->unit = $request->unit_name;
+        $unitOld = $unit->unit_type;
         $unitNow = $request->unit_type;
-        $convert_gram = $request->convert_gram;
+        $unit->unit = $request->unit_name;
         $unit->unit_type = $unitNow;
+        $convert_gram = $request->convert_gram;
         $unit->save();
         //update based on unit type
-        if ($unit->unit_type == $unitNow) {
+        if ($unitOld == $unitNow) {
             if ($unit->unit_type == "common") {                
                 return redirect()->action('ConverterController@updateConverter', ['unit_id' => $id, 'gram' => $convert_gram ]);
             }
-        } if ($unit->unit_type != $unitNow ) {
+        } if ($unitOld != $unitNow ) {
             if ($unitNow == "common") {
                 return redirect()->action('ConverterController@addConverter', ['unit_id' => $id, 'gram' => $convert_gram ]);
             } else if ($unitNow == "uncommon") {
