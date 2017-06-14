@@ -42,4 +42,25 @@ class OrderController extends Controller {
             200
         );
     }
+
+    function getOrder(Request $request, $id) {
+        //retrieve order by id from database
+        // $status = Order::find($id);
+
+
+        // return Response::json(array(
+        //     'customer_id'=>1,
+        //     'status'=>$status),
+        //     200
+        // );
+        $order = DB::table('orders')
+                    ->join('users', 'orders.customer_id', '=', 'users.id')
+                    -> select(DB::raw('users.name, total_products, total_price, 
+                        garendong_id,order_status'))
+                    -> where('customer_id', '=', $id)
+                    -> get();
+
+        // return response()->json(array('error' => false, 'order' => $order));
+        return response()->json($order);
+    }
 }
