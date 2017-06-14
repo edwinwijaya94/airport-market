@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->integer('total_price')->default(0);
             $table->integer('garendong_id')->default(0);
             $table->integer('order_status')->default(1);
+            $table->integer('rating')->nullable();
             $table->timestamps();
         });
     }
