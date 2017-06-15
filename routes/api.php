@@ -44,11 +44,12 @@ Route::post('/virtualmarket/product/edit/{id}', 'ProductController@updateProduct
 
 //Route for Order
 Route::get('/virtualmarket/order', 'OrderController@getAllOrder');
-Route::get('/virtualmarket/order/{id}', 'OrderController@getOrder');
+Route::get('/virtualmarket/order/{id}', 'OrderController@getOrderById');
 Route::post('/virtualmarket/order/add', 'OrderController@addOrder');
 
 //Route for Order Line
 Route::get('/virtualmarket/orderline', 'OrderLineController@getAllOrderLine');
+Route::get('/virtualmarket/orderline/{id}', 'OrderLineController@getOrderLinebyId');
 Route::post('/virtualmarket/order/add/{id}', 'OrderLineController@addOrderLine');
 
 //Route for Order Status
