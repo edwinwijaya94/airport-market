@@ -75,8 +75,23 @@ class UnitController extends Controller {
                 return redirect()->action('ConverterController@addConverter', ['unit_id' => $id, 'gram' => $convert_gram ]);
             } else if ($unitNow == "uncommon") {
                 //delete unit from converter
-                // return redirect()->action('ConverterController@addConverter', ['unit_id' => $unit_id, 'gram' => $convert_gram ]);
+                return redirect()->action('ConverterController@deleteConverter', ['unit_id' => $id]);
             }
         }        
+    }
+
+    public function deleteUnit($id) {
+        $unit = Unit::find($id);
+        $unit->delete();
+        if ($unit->unit_type == "common") {
+            //delete converter
+            return redirect()->action('ConverterController@deleteConverter', ['unit_id' => $id]);
+        } else {
+            return Response::json(array(
+                'error'=>false,
+                'message'=>"Unit berhasil dihapus"),
+                200
+            );
+        }
     }
 }

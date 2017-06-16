@@ -9,7 +9,8 @@ use Response;
 
 class OrderStatusController extends Controller
 {
-	function getStatus() {
+	public function getStatus() {
+	//retrieve all statuses from database
 		$statuses = OrderStatus::all();
     	
     	return Response::json(array(
