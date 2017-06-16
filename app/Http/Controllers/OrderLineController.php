@@ -31,4 +31,17 @@ class OrderLineController extends Controller
             200
         );
     }
+
+    public function getOrderLinebyId($id) {
+
+        $order_line = OrderLine::where('order_id', '=', $id)
+                        ->get();
+
+        foreach ($order_line as $item) {
+            $item = $item->order;
+        }
+
+
+        return response()->json($order_line);
+    }
 }

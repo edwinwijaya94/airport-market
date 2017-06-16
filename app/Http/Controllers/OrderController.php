@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Response;
 use DateTime;
 
 class OrderController extends Controller {
+
+    protected $connection = 'pgsql_2';
 
     public function addOrder(Request $request) {
         //add order to database
@@ -31,15 +35,16 @@ class OrderController extends Controller {
         );
     }
 
-    function getOrder(Request $request, $id) {
-        //retrieve order by id from database
-        $status = Order::find($id);
+    public function getOrderById($id) {
+        
+        $order = Order::where('garendong_id', '=', $id)
+                    ->get();
 
+        foreach($order as $item){
+            $item = $item->user;
+        }
 
-        return Response::json(array(
-            'error'=>false,
-            'status'=>$status),
-            200
-        );
+        // return response()->json(array('error' => false, 'order' => $order));
+        return response()->json($order);
     }
 }

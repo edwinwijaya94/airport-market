@@ -21,6 +21,7 @@ class CreateOrderLinesTable extends Migration
             $table->integer('price')->default(0);
             $table->integer('unit_id');
             $table->boolean('is_priority');
+            $table->boolean('is_available')->default(true);
             $table->timestamps();
         });
     }
