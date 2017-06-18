@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Order;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Response;
 use DateTime;
 
 class OrderController extends Controller {
-
-    protected $connection = 'pgsql_2';
 
     public function addOrder(Request $request) {
         //add order to database
@@ -36,7 +33,6 @@ class OrderController extends Controller {
     }
 
     public function getOrderById($id) {
-        
         $order = Order::where('garendong_id', '=', $id)
                     ->get();
 
@@ -47,4 +43,13 @@ class OrderController extends Controller {
         // return response()->json(array('error' => false, 'order' => $order));
         return response()->json($order);
     }
+
+    // public function updateTotalPrice($id, $price)
+    // {        
+    //     $order = Order::find($id);
+    //     $order->total_price = $order->total_price + $price;
+    //     $order->save();
+
+    //     return 'Berhasil update total price';
+    // }
 }

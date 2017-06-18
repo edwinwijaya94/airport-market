@@ -25,6 +25,6 @@ class Order extends Model
     }
 
     public function user() {
-        return $this->belongsTo('App\User', 'customer_id')->select('name');
+        return $this->belongsTo('App\User', 'customer_id')->select('name', 'address', 'phone_number');
     }
 }
