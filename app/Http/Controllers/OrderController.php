@@ -43,13 +43,4 @@ class OrderController extends Controller {
         // return response()->json(array('error' => false, 'order' => $order));
         return response()->json($order);
     }
-
-    // public function updateTotalPrice($id, $price)
-    // {        
-    //     $order = Order::find($id);
-    //     $order->total_price = $order->total_price + $price;
-    //     $order->save();
-
-    //     return 'Berhasil update total price';
-    // }
 }
