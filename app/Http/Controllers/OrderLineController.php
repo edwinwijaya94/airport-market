@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\OrderLine;
+use App\Order;
 use Illuminate\Http\Request;
 use Response;
 
@@ -43,5 +44,19 @@ class OrderLineController extends Controller
 
 
         return response()->json($order_line);
+    }
+
+    public function updateProductPrice(Request $request){
+        $orderline = OrderLine::find($request->id);
+        var_dump($request->id);
+        var_dump($request->price);
+        $orderline->price = $request->price;
+        $orderline->save();
+
+        $order = Order::find($orderline->order_id);
+        $order->total_price = $order->total_price + $request->price;
+        $order->save();
+
+        return 'Berhasil Update';
     }
 }
