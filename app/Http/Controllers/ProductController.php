@@ -31,6 +31,7 @@ class ProductController extends Controller {
     }
 
     public function getAllProduct(Request $request) {
+        //retrieve all products from database
         $products = Product::all();
 
         return Response::json(array(
@@ -41,6 +42,7 @@ class ProductController extends Controller {
     }
 
     public function getProduct(Request $request, $id) {
+        //retrieve product based on id from database
     	$detail = Product::find($id);
         $detail->default_unit_id = $detail->unit->unit;
 
@@ -52,6 +54,7 @@ class ProductController extends Controller {
     }
 
     public function getSearchProduct(Request $request, $keyword) {
+        //retrieve product based on key word from user
         $results = Product::where('name', 'LIKE', '%'.$keyword.'%')->get();
         foreach($results as $result)
             $result->default_unit_id = $result->unit->unit;
@@ -61,6 +64,23 @@ class ProductController extends Controller {
             'products'=>$results->toArray()),
             200
         );
+    }
+
+    public function getImage($folder, $filename) {
+        //retrieve image from file
+        $path = public_path('images/') . $folder . '/' . $filename;
+
+        if(!File::exists($path)) {
+            return response()->json(['message' => 'Image not found.'], 404);
+        }
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
     }
 
     public function addProduct(Request $request) {
@@ -167,6 +187,22 @@ class ProductController extends Controller {
         return Response::json(array(
             'error'=>false,
             'message'=>"Produk berhasil diubah"),
+            200
+        );
+    }
+
+    public function deleteProduct($id) {
+        //delete data of prorduct from database
+        $product = Product::find($id);
+        $oldImage = $product->product_img;
+        //delete image
+        $pathFile = public_path('images/products/') . $oldImage;
+        File::delete($pathFile);
+        $product->delete();
+
+        return Response::json(array(
+            'error'=>false,
+            'message'=>"Produk berhasil dihapus"),
             200
         );
     }

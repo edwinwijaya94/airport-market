@@ -32,9 +32,9 @@ class ConverterController extends Controller {
 
     public function updateConverter(Request $request, $id, $gram) {
         //update unit to database
-        $converter = Converter::find($id);
-        $converter->unit_id = $request->unit_id;
-        $converter->in_gram = $request->gram;
+        $converter = Converter::where('unit_id', $id);
+        $converter->unit_id = $id;
+        $converter->in_gram = $gram;
         $converter->save();
 
         return Response::json(array(
@@ -54,6 +54,18 @@ class ConverterController extends Controller {
         return Response::json(array(
             'error'=>false,
             'message'=>"Unit dan converter berhasil ditambahkan"),
+            200
+        );
+    }
+
+    public function deleteConverter($unit_id) {
+        //delete converter based on unit id from database
+        $converter = Converter::where('unit_id', $unit_id);
+        $converter->delete();
+
+        return Response::json(array(
+            'error'=>false,
+            'message'=>"Unit dan Converter berhasil dihapus"),
             200
         );
     }

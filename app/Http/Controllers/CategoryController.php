@@ -25,6 +25,7 @@ class CategoryController extends Controller {
     }
 
     public function getCategory(Request $request, $id) {
+        //retrieve categoy based on id from database
     	$category = Category::find($id);
 
     	return Response::json(array(
@@ -35,6 +36,7 @@ class CategoryController extends Controller {
     }
 
     public function addCategory(Request $request) {
+        //add new category to database
         $category = new Category();
         //add image to folder images
         $fileImage = $request->category_image;
@@ -53,6 +55,7 @@ class CategoryController extends Controller {
     }
 
     public function updateCategory(Request $request, $id) {
+        //update category based on id in database
         $category = Category::find($id);
         $oldImage = $category->category_img;
         //check image update or not
@@ -79,4 +82,20 @@ class CategoryController extends Controller {
     		200
     	);
 	}
+
+    public function deleteCategory($id) {
+        //delete data of category from database
+        $category = Category::find($id);
+        $oldImage = $category->category_img;
+        //delete image
+        $pathFile = public_path('images/categories/') . $oldImage;
+        File::delete($pathFile);
+        $category->delete();
+
+        return Response::json(array(
+            'error'=>false,
+            'message'=>"Kategori berhasil dihapus"),
+            200
+        );
+    }
 }
