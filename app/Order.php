@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -26,5 +27,9 @@ class Order extends Model
 
     public function user() {
         return $this->belongsTo('App\User', 'customer_id')->select('name', 'address', 'phone_number');
+    }
+
+    public function getUpdatedAtAttribute($date) {
+        return Carbon::parse($date)->format('l, d F Y H:i');
     }
 }

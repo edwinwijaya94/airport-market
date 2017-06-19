@@ -9,7 +9,7 @@ use Response;
 
 class OrderStatusController extends Controller
 {
-	public function getStatus() {
+	public function getAllStatus() {
 	//retrieve all statuses from database
 		$statuses = OrderStatus::all();
     	

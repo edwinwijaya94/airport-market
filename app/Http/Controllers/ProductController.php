@@ -55,7 +55,7 @@ class ProductController extends Controller {
 
     public function getSearchProduct(Request $request, $keyword) {
         //retrieve product based on key word from user
-        $results = Product::where('name', 'LIKE', '%'.$keyword.'%')->get();
+        $results = Product::where('name', 'ILIKE', '%'.$keyword.'%')->get();
         foreach($results as $result)
             $result->default_unit_id = $result->unit->unit;
 
