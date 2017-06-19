@@ -16,6 +16,5 @@ class OrderStatusSeeder extends Seeder
             ['status' => 'Pesanan Anda sedang dibelanjakan'],
             ['status' => 'Pesanan Anda sedang dikirim'],
         ]);
-
     }
 }
