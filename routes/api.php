@@ -48,9 +48,10 @@ Route::post('/virtualmarket/product/delete/{id}', 'ProductController@deleteProdu
 
 //Route for Order
 Route::get('/virtualmarket/order', 'OrderController@getAllOrder');
-Route::get('/virtualmarket/order/{id}', 'OrderController@getOrderById');
-// Route::get('/virtualmarket/order/{id}/{price}', 'OrderController@updateTotalPrice')->name('updateTotalPrice');
+Route::get('/virtualmarket/order/getData/{id}', 'OrderController@getOrderById');
 Route::post('/virtualmarket/order/add', 'OrderController@addOrder');
+Route::post('/virtualmarket/order/updateDeliveryStatus', 'OrderController@updateDeliveryStatus');
+Route::post('/virtualmarket/order/updateConfirmationStatus', 'OrderController@updateConfirmationStatus');
 
 
 //Route for Order Line
@@ -58,6 +59,7 @@ Route::get('/virtualmarket/orderline', 'OrderLineController@getAllOrderLine');
 Route::get('/virtualmarket/orderline/{id}', 'OrderLineController@getOrderLinebyId');
 Route::post('/virtualmarket/order/add/{id}', 'OrderLineController@addOrderLine');
 Route::post('/virtualmarket/orderline/updatePrice', 'OrderLineController@updateProductPrice');
+Route::post('/virtualmarket/orderline/updateStatus', 'OrderLineController@updateStatus');
 
 //Route for Order Status
 Route::get('/virtualmarket/status', 'OrderStatusController@getStatus');

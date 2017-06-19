@@ -22,3 +22,6 @@ Route::get('virtualmarket/unit/add', 'UnitController@unitPost');
 
 //Route for Products
 Route::get('virtualmarket/products/add', 'ProductController@productAdd');
+
+//Route for payment
+Route::get('virtualmarket/pays', 'PaymentController@addPaymentFactor');
