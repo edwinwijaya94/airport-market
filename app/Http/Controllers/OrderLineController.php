@@ -48,15 +48,32 @@ class OrderLineController extends Controller
 
     public function updateProductPrice(Request $request){
         $orderline = OrderLine::find($request->id);
-        var_dump($request->id);
-        var_dump($request->price);
-        $orderline->price = $request->price;
-        $orderline->save();
-
         $order = Order::find($orderline->order_id);
-        $order->total_price = $order->total_price + $request->price;
-        $order->save();
+        if ($orderline->price == 0){
+            $order->total_price += $request->price;
+            $order->save();
+        } else {
+            $order->total_price = $order->total_price - $orderline->price + $request->price;
+            $order->save();
+        }
+        $orderline->price = $request->price;
+        $orderline->is_available = true;
+        $orderline->save();        
 
         return 'Berhasil Update';
+    }
+
+    public function updateStatus(Request $request){
+        $orderline = OrderLine::find($request->id);
+        $order = Order::find($orderline->order_id);
+        if ($orderline->price != 0){
+            $order->total_price -= $orderline->price;
+            $orderline->price = 0;
+            $order->save();
+        }
+        $orderline->is_available = false;
+        $orderline->save();
+
+        return 'Status false';
     }
 }
