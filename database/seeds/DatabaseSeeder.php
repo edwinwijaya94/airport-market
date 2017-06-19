@@ -11,6 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(OrderStatusSeeder::class);
+        // call uses table seeder class
+        $this->call('OrderLinesTableSeeder');
+        $this->call('OrdersTableSeeder');
+        $this->call('UsersTableSeeder');
+        //this message shown in your terminal after running db:seed command
+        // $this->command->info("Order Line table seeded");
     }
 }
