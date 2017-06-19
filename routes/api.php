@@ -49,12 +49,15 @@ Route::post('/virtualmarket/product/delete/{id}', 'ProductController@deleteProdu
 //Route for Order
 Route::get('/virtualmarket/order', 'OrderController@getAllOrder');
 Route::get('/virtualmarket/order/{id}', 'OrderController@getOrderById');
+// Route::get('/virtualmarket/order/{id}/{price}', 'OrderController@updateTotalPrice')->name('updateTotalPrice');
 Route::post('/virtualmarket/order/add', 'OrderController@addOrder');
+
 
 //Route for Order Line
 Route::get('/virtualmarket/orderline', 'OrderLineController@getAllOrderLine');
 Route::get('/virtualmarket/orderline/{id}', 'OrderLineController@getOrderLinebyId');
 Route::post('/virtualmarket/order/add/{id}', 'OrderLineController@addOrderLine');
+Route::post('/virtualmarket/orderline/updatePrice', 'OrderLineController@updateProductPrice');
 
 //Route for Order Status
 Route::get('/virtualmarket/status', 'OrderStatusController@getAllStatus');
@@ -68,6 +71,12 @@ Route::get('/virtualmarket/feedback/history', 'OrderController@getOrderHistory')
 Route::post('/virtualmarket/rating/add', 'OrderController@addRating');
 Route::post('/virtualmarket/feedback/add', 'UserFeedbackController@addFeedback');
 Route::get('/virtualmarket/feedback', 'UserFeedbackController@getAllFeedback');
+
+//Route for Order Confirmation
+Route::get('/virtualmarket/confirmation/{id}', 'ConfirmationController@getDetailOrder');
+
+//Route for Allocating Garendong
+Route::get('/virtualmarket/allocation', 'AllocationController@allocateGarendong');
 
 //Route for image
 Route::get('/virtualmarket/images/{folder}/{filename}', 'ProductController@getImage');

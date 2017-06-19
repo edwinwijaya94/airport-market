@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Order;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Response;
 
 class OrderController extends Controller {
-
-    protected $connection = 'pgsql_2';
 
     public function addOrder(Request $request) {
         //add order to database
@@ -35,7 +32,6 @@ class OrderController extends Controller {
     }
 
     public function getOrderById($id) {
-        
         $order = Order::where('garendong_id', '=', $id)
                     ->get();
 
