@@ -32,15 +32,32 @@ class OrderController extends Controller {
     }
 
     public function getOrderById($id) {
-        $order = Order::where('garendong_id', '=', $id)
-                    ->get();
-
+        $order = Order::where([
+            ['garendong_id', '=', $id],
+            ['order_status', '<>', 4],
+            ])->get();
+        
         foreach($order as $item){
             $item = $item->user;
         }
 
-        // return response()->json(array('error' => false, 'order' => $order));
         return response()->json($order);
+    }
+
+    public function updateDeliveryStatus(Request $request){
+        $order = Order::find($request->id);
+        $order->order_status = 3;
+        $order->save();
+
+        return 'Pesanan sedang dikirim';
+    }
+
+    public function updateConfirmationStatus(Request $request){
+        $order = Order::find($request->id);
+        $order->order_status = 4;
+        $order->save();
+
+        return 'Pesanan selesai';
     }
 
     public function getStateStatus($id) {
@@ -70,6 +87,5 @@ class OrderController extends Controller {
             'order'=>$histories->toArray()),
             200
         );
-
     }
 }
