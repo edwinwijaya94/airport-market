@@ -57,7 +57,17 @@ Route::get('/virtualmarket/orderline/{id}', 'OrderLineController@getOrderLinebyI
 Route::post('/virtualmarket/order/add/{id}', 'OrderLineController@addOrderLine');
 
 //Route for Order Status
-Route::get('/virtualmarket/status', 'OrderStatusController@getStatus');
+Route::get('/virtualmarket/status', 'OrderStatusController@getAllStatus');
+Route::get('/virtualmarket/state-status/{id}', 'OrderController@getStateStatus');
+
+//Route for Reason
+Route::get('/virtualmarket/reasons', 'ReasonController@getAllReasons');
+
+//Route for Feedback
+Route::get('/virtualmarket/feedback/history', 'OrderController@getOrderHistory');
+Route::post('/virtualmarket/rating/add', 'OrderController@addRating');
+Route::post('/virtualmarket/feedback/add', 'UserFeedbackController@addFeedback');
+Route::get('/virtualmarket/feedback', 'UserFeedbackController@getAllFeedback');
 
 //Route for image
 Route::get('/virtualmarket/images/{folder}/{filename}', 'ProductController@getImage');

@@ -7,7 +7,6 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Response;
-use DateTime;
 
 class OrderController extends Controller {
 
@@ -46,5 +45,35 @@ class OrderController extends Controller {
 
         // return response()->json(array('error' => false, 'order' => $order));
         return response()->json($order);
+    }
+
+    public function getStateStatus($id) {
+        $order = Order::find($id);
+
+        return Response::json(array(
+            'error'=>false,
+            'state_status'=>$order),
+            200
+        );
+    }
+
+    public function addRating(Request $request) {
+        $order_id = $request->order_id;
+        $order = Order::find($order_id);
+        $order->rating = $request->rating;
+        $order->save();
+        
+        return "Terima kasih atas umpan balik Anda";
+    }
+
+    public function getOrderHistory() {
+        $histories = Order::where('order_status', '=', 1)->get();
+
+        return Response::json(array(
+            'error'=>false,
+            'order'=>$histories->toArray()),
+            200
+        );
+
     }
 }
