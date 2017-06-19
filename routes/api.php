@@ -82,3 +82,6 @@ Route::get('/virtualmarket/allocation', 'AllocationController@allocateGarendong'
 
 //Route for image
 Route::get('/virtualmarket/images/{folder}/{filename}', 'ProductController@getImage');
+
+//Route for payment
+Route::get('/virtualmarket/payment', 'PaymentController@countPayment');
