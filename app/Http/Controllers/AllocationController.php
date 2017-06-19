@@ -10,8 +10,6 @@ use Response;
 use DateTime;
 
 class AllocationController extends Controller {
-	
-
 	public function allocateGarendong() {
 		$orders = Order::all();
 		$garendong = 1;

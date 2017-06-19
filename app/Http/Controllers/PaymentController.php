@@ -14,6 +14,6 @@ class PaymentController extends Controller {
     }
 
     public function addPaymentConstant(Request $request){
-    	
+    	return 'test';
     }
 }
