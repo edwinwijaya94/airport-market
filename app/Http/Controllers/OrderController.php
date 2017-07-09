@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Garendong;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Response;
@@ -36,6 +37,19 @@ class OrderController extends Controller {
             ['garendong_id', '=', $id],
             ['order_status', '<>', 4],
             ])->get();
+
+        $numberAllocation = Order::where('garendong_id', '=', $id)
+                                ->count();
+        $garendong = Garendong::find($id);
+        if ($garendong->number_of_allocation == 0){
+            $garendong->number_of_allocation += $numberAllocation;
+            $garendong->save();
+        } else {
+            $garendong->number_of_allocation -= $garendong->number_of_allocation;
+            $garendong->number_of_allocation += $numberAllocation;
+            $garendong->save();
+        }
+        
         
         foreach($order as $item){
             $item = $item->user;
