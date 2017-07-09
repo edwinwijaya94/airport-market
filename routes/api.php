@@ -72,7 +72,7 @@ Route::get('/virtualmarket/reasons', 'ReasonController@getAllReasons');
 Route::get('/virtualmarket/feedback/history', 'OrderController@getOrderHistory');
 Route::post('/virtualmarket/rating/add', 'OrderController@addRating');
 Route::post('/virtualmarket/feedback/add', 'UserFeedbackController@addFeedback');
-Route::get('/virtualmarket/feedback', 'UserFeedbackController@getAllFeedback');
+Route::post('/virtualmarket/feedback', 'UserFeedbackController@getAllFeedback');
 
 //Route for Order Confirmation
 Route::get('/virtualmarket/confirmation/{id}', 'ConfirmationController@getDetailOrder');
