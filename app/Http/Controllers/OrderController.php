@@ -50,7 +50,6 @@ class OrderController extends Controller {
             $garendong->save();
         }
         
-        
         foreach($order as $item){
             $item = $item->user;
         }
@@ -64,6 +63,7 @@ class OrderController extends Controller {
         $order->save();
 
         return 'Pesanan sedang dikirim';
+        // return redirect(); buat SMS
     }
 
     public function updateConfirmationStatus(Request $request){
@@ -72,6 +72,7 @@ class OrderController extends Controller {
         $order->save();
 
         return 'Pesanan selesai';
+        // return redirect(); buat SMS
     }
 
     public function getStateStatus($id) {

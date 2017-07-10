@@ -14,6 +14,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/address', function(){
+	return view('address');
+});
+
+Route::get('/product', function(){
+	return view('product');
+});
+
+Route::post('/virtualmarket/user/add', 'UserController@addUser');
+
 //Route for Categories
 Route::get('virtualmarket/categories/add', 'CategoryController@imageUpload');
 

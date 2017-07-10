@@ -86,6 +86,7 @@ Route::get('/virtualmarket/confirmation/{id}', 'ConfirmationController@getDetail
 
 //Route for Allocating Garendong
 Route::get('/virtualmarket/allocation', 'AllocationController@allocateGarendong');
+Route::get('/virtualmarket/allocationByDistance', 'AllocationController@allocateGarendongByDistance');
 
 //Route for image
 Route::get('/virtualmarket/images/{folder}/{filename}', 'ProductController@getImage');
