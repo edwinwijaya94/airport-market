@@ -11,4 +11,8 @@ class Product extends Model
     public function unit() {
     	return $this->belongsTo('App\Unit', 'default_unit_id');
     }
+
+    public function orderline() {
+        return $this->hasOne('App\Orderline');
+    }
 }

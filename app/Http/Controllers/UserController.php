@@ -11,11 +11,10 @@ class UserController extends Controller
     public function addUser(Request $request) {
         //add order to database
     	$user = new User();
-        $user->name = $request->name;
+        $user->name = $request->customer_name;
         $user->address = $request->address;
-        $user->phone = $request->phone;
+        $user->phone_number = $request->phone_number;
         $user->username = $request->username;
-        $user->password = $request->password;
         $user->save();
 
         return "Selamat Anda sudah terdaftar di Fresh Market";

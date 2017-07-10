@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\OrderLine;
 use App\Order;
+use App\Product;
 use Illuminate\Http\Request;
 use Response;
 
@@ -39,9 +40,12 @@ class OrderLineController extends Controller
                         ->get();
 
         foreach ($order_line as $item) {
-            $item = $item->order;
+            $item = $item->product;
         }
 
+        // foreach ($order_line as $item) {
+        //     $item = $item->order;
+        // }
 
         return response()->json($order_line);
     }
