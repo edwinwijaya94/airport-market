@@ -18,5 +18,6 @@ class VerifyCsrfToken extends BaseVerifier
         'api/virtualmarket/rating/add',
         'api/virtualmarket/feedback/add',
         'api/virtualmarket/orderline/*',
+        'api/virtualmarket/user/edit',
     ];
 }

@@ -17,6 +17,8 @@ class CategoryController extends Controller {
     public function getAllCategory() {
     	//retrieve all categories from datbase
     	$categories = Category::all();
+        foreach($categories as $category) 
+            $category->name = ucwords($category->name);
     	
     	return Response::json(array(
     		'categories'=>$categories->toArray()),

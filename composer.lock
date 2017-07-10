@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8ad002e217491211b76a7c75dc6d7b7b",
-    "content-hash": "96098e473b028cdb2529580554a1ae3e",
+    "hash": "f32636910cef7b433864bbba9207cc66",
+    "content-hash": "0aab8f13a1032f23962dc0657787773c",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1767,6 +1767,51 @@
             "time": "2017-03-12 16:07:05"
         },
         {
+            "name": "textmagic/sdk",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/textmagic/textmagic-rest-php.git",
+                "reference": "b81cd04df7ab6fd21f0ddd75bf987cf3f65fe9c6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/textmagic/textmagic-rest-php/zipball/b81cd04df7ab6fd21f0ddd75bf987cf3f65fe9c6",
+                "reference": "b81cd04df7ab6fd21f0ddd75bf987cf3f65fe9c6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.5.*"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "Services/TextmagicRestClient.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Denis",
+                    "email": "denis@textmagic.com"
+                }
+            ],
+            "description": "A PHP wrapper for Textmagic API",
+            "homepage": "http://github.com/textmagic/textmagic-rest-php",
+            "keywords": [
+                "api",
+                "sms",
+                "textmagic"
+            ],
+            "time": "2015-10-26 14:22:41"
+        },
+        {
             "name": "tijsverkoyen/css-to-inline-styles",
             "version": "2.2.0",
             "source": {
@@ -3338,8 +3383,10 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "textmagic/sdk": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

@@ -76,10 +76,11 @@ class OrderController extends Controller {
 
     public function getStateStatus($id) {
         $order = Order::find($id);
+        // $garendong = Garendong::find($order->garendong_id);
 
         return Response::json(array(
             'error'=>false,
-            'state_status'=>$order),
+            'order'=>$order),
             200
         );
     }

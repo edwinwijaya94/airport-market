@@ -17,6 +17,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//Route for Users
+Route::get('/virtualmarket/user/all', 'UserController@getAllUser');
+Route::post('/virtualmarket/user', 'UserController@getUserByID');
+Route::post('/virtualmarket/user/register', 'UserController@adduser');
+Route::post('/virtualmarket/user/login', 'UserController@login');
+Route::post('/virtualmarket/user/edit', 'UserController@updateUser');
+
 //Route for Categories
 Route::get('/virtualmarket/categories', 'CategoryController@getAllCategory');
 Route::post('/virtualmarket/categories/add', 'CategoryController@addCategory');
@@ -63,7 +70,7 @@ Route::post('/virtualmarket/orderline/updateStatus', 'OrderLineController@update
 
 //Route for Order Status
 Route::get('/virtualmarket/status', 'OrderStatusController@getAllStatus');
-Route::get('/virtualmarket/state-status/{id}', 'OrderController@getStateStatus');
+Route::get('/virtualmarket/order/{id}', 'OrderController@getStateStatus');
 
 //Route for Reason
 Route::get('/virtualmarket/reasons', 'ReasonController@getAllReasons');
@@ -85,3 +92,7 @@ Route::get('/virtualmarket/images/{folder}/{filename}', 'ProductController@getIm
 
 //Route for payment
 Route::get('/virtualmarket/payment', 'PaymentController@countPayment');
+
+//Route for SMS
+// Route::get('/sms/send', 'SMSController@sendMessage');
+Route::post('virtualmarket/sms/receive', 'SMSController@receiveMessage');

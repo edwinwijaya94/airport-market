@@ -20,8 +20,10 @@ class ProductController extends Controller {
     public function getAllProductByCategory(Request $request, $id) {
     	//retrieve all products based on cateory
     	$products = Category::find($id)->products;
-        foreach($products as $product)
+        foreach($products as $product) {
             $product->default_unit_id = $product->unit->unit;
+            $product->name = ucwords($product->name);
+        }
 
     	return Response::json(array(
     		'error'=> false,
@@ -45,6 +47,7 @@ class ProductController extends Controller {
         //retrieve product based on id from database
     	$detail = Product::find($id);
         $detail->default_unit_id = $detail->unit->unit;
+        $detail->name = ucwords($detail->name);
 
     	return Response::json(array(
     		'error'=>false,
