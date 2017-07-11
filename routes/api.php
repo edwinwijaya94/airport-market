@@ -20,9 +20,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //Route for Users
 Route::get('/virtualmarket/user/all', 'UserController@getAllUser');
 Route::post('/virtualmarket/user', 'UserController@getUserByID');
-Route::post('/virtualmarket/user/register', 'UserController@adduser');
+Route::post('/virtualmarket/user/register', 'UserController@addUser');
 Route::post('/virtualmarket/user/login', 'UserController@login');
 Route::post('/virtualmarket/user/edit', 'UserController@updateUser');
+Route::post('/virtualmarket/garendong/register', 'UserController@addGarendong');
 
 //Route for Categories
 Route::get('/virtualmarket/categories', 'CategoryController@getAllCategory');
@@ -92,7 +93,7 @@ Route::get('/virtualmarket/allocationByDistance', 'AllocationController@allocate
 Route::get('/virtualmarket/images/{folder}/{filename}', 'ProductController@getImage');
 
 //Route for payment
-Route::get('/virtualmarket/payment', 'PaymentController@countPayment');
+Route::get('/virtualmarket/rates', 'PaymentController@countRates');
 
 //Route for SMS
 // Route::get('/sms/send', 'SMSController@sendMessage');

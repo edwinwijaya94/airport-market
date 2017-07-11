@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->integer('garendong_id')->default(0);
             $table->integer('order_status')->default(1);
             $table->integer('rating')->nullable();
+            $table->integer('rates')->default(0);
             $table->timestamps();
         });
     }
