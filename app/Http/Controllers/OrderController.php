@@ -96,11 +96,21 @@ class OrderController extends Controller {
     }
 
     public function getOrderHistory() {
-        $histories = Order::where('order_status', '=', 1)->get();
+        $histories = Order::where('order_status', '=', 4)->get();
 
         return Response::json(array(
             'error'=>false,
             'order'=>$histories->toArray()),
+            200
+        );
+    }
+
+    public function getAllGarendong() {
+        $garendong = Garendong::all();
+
+        return Response::json(array(
+            'error'=>false,
+            'garendong'=>$garendong->toArray()),
             200
         );
     }
