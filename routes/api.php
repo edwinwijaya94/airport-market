@@ -94,6 +94,7 @@ Route::get('/virtualmarket/images/{folder}/{filename}', 'ProductController@getIm
 
 //Route for payment
 Route::get('/virtualmarket/rates', 'PaymentController@countRates');
+Route::get('/virtualmarket/ratesById', 'PaymentController@countRatesById');
 
 //Route for SMS
 // Route::get('/sms/send', 'SMSController@sendMessage');

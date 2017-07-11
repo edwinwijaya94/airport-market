@@ -93,4 +93,33 @@ class PaymentController extends Controller {
 
         return "Perhitungan Tarif Selesai";
     }
+
+    public function countRatesById($id){
+        $origin = "&origins=";
+        $destination = "&destinations=";
+        $key = "&key=AIzaSyAT65_OGp-KOIb8aTd9uc3Whh3IbYrVEAY";
+        $tarif_dasar = Pay::find(1);
+        $tarif_jarak = Pay::find(2);
+
+        $user = User::find($id);
+        $destination .= urlencode($user->address);
+        $origin_decode = "Bandung, Jalan Soekarno Hatta, Cipadung Kidul, Bandung City, West Java, Indonesia";
+        $origin .= urlencode($origin_decode);
+
+        $client = new Client();
+        $url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial";
+        $url = $url . $origin . $destination . $key;
+        $response = $client->get($url);
+
+        $body = $response->getBody();
+
+        $data = json_decode($body, true);
+
+        $tarif = $data['rows'][0]['elements'][0]['distance']['value'];
+        $tarif *= $tarif_jarak->constant;
+        $temp_tarif = $tarif/1000;
+        $tarif = intval($temp_tarif) + $tarif_dasar->constant;
+
+        return $tarif;
+    }
 }
