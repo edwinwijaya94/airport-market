@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Pay;
 use App\Garendong;
+use App\Order;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use GuzzleHttp\Client;
 use Response;
 use DateTime;
 
@@ -39,5 +42,55 @@ class PaymentController extends Controller {
     	}
 
     	return 'Tarif Berhasil Dihitung';
+    }
+
+    public function countRates(){
+        $origin = "&origins=";
+        $destination = "&destinations=";
+        $key = "&key=AIzaSyAT65_OGp-KOIb8aTd9uc3Whh3IbYrVEAY";
+        $tarif_dasar = Pay::find(1);
+        $tarif_jarak = Pay::find(2);
+        $counter = 0;
+
+        $orders = Order::where('rates', '=', 0)
+                        ->get();
+        $numOrders = count($orders);
+
+        $origin_decode = "Bandung, Jalan Soekarno Hatta, Cipadung Kidul, Bandung City, West Java, Indonesia";
+        $origin .= urlencode($origin_decode);
+
+        foreach ($orders as $order) {
+            $user = User::find($order->customer_id);
+
+            if($counter==0){
+                $destination .= urlencode($user->address);  
+            } else{
+                $destination = $destination . "|" . urlencode($user->address);
+            }
+
+            $client = new Client();
+            $url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial";
+            $url = $url . $origin . $destination . $key;
+            $response = $client->get($url);
+
+            $body = $response->getBody();
+
+            $data = json_decode($body, true);
+
+            $tarif = $data['rows'][0]['elements'][0]['distance']['value'];
+            $tarif *= $tarif_jarak->constant;
+            $temp_tarif = $tarif/1000;
+            $tarif = intval($temp_tarif) + $tarif_dasar->constant;
+            
+            $order->rates = $tarif;
+            $order->save();
+
+            $destination = "&destinations=";
+            $counter++;
+        }
+
+        
+
+        return "Perhitungan Tarif Selesai";
     }
 }

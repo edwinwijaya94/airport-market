@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Garendong;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Response;
@@ -72,5 +73,27 @@ class UserController extends Controller
                 'message'=>"Anda belum terdaftar. Silahkan lakukan Registrasi")
             );
         }
+    }
+
+    public function addGarendong(Request $request) {
+        //add order to database
+        $user = new User();
+        $user->name = strtolower($request->name);
+        $user->username = strtolower($request->username);
+        $user->address = $request->address;
+        $user->phone_number = $request->phone;
+        $user->password = $request->password;
+        $user->save();
+
+        $user = User::where('username', '=', strtolower($request->username))
+                    ->first();
+        var_dump($user->id);
+        $garendong = new Garendong();
+        $garendong->user_id = $user->id;
+        $garendong->rating = 0;
+        $garendong->num_rating = 0;
+        $garendong->save();
+
+        return "Selamat Anda sudah terdaftar di Fresh Market";
     }
 }

@@ -29,27 +29,14 @@
         <img src="/images/{{ Session::get('path') }}">
         @endif
 
-        <form action="{{ url('api/virtualmarket/product/add') }}" enctype="multipart/form-data" method="POST">
+        <form action="{{ url('api/virtualmarket/product/') }}" enctype="multipart/form-data" method="POST">
           {{ csrf_field() }}
-          <input type="hidden" name="id" value="{{isset($product->id)? $product->id:''}}">
           <div class="row">
             <div class="col-md-12">
-              <input type="text" name="product_name" />
+              <input type="text" name="tarif_dasar" />
             </div>
             <div class="col-md-12">
-              <input type="text" name="category_id" />
-            </div>
-            <div class="col-md-12">
-              <input type="number" name="product_quantity" />
-            </div>
-            <div class="col-md-12">
-              <input type="text" name="unit_id" />
-            </div>
-            <div class="col-md-12">
-              <input type="number" name="product_price" />
-            </div>
-            <div class="col-md-12">
-              <input type="file" name="product_image" />
+              <input type="text" name="tarif_jarak" />
             </div>
             <div class="col-md-12">
               <button type="submit" class="btn btn-success">Upload</button>
