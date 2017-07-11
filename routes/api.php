@@ -60,6 +60,7 @@ Route::get('/virtualmarket/order/getData/{id}', 'OrderController@getOrderById');
 Route::post('/virtualmarket/order/add', 'OrderController@addOrder');
 Route::post('/virtualmarket/order/updateDeliveryStatus', 'OrderController@updateDeliveryStatus');
 Route::post('/virtualmarket/order/updateConfirmationStatus', 'OrderController@updateConfirmationStatus');
+Route::get('/virtualmarket/garendong', 'OrderController@getAllGarendong');
 
 
 //Route for Order Line
@@ -80,7 +81,7 @@ Route::get('/virtualmarket/reasons', 'ReasonController@getAllReasons');
 Route::get('/virtualmarket/feedback/history', 'OrderController@getOrderHistory');
 Route::post('/virtualmarket/rating/add', 'OrderController@addRating');
 Route::post('/virtualmarket/feedback/add', 'UserFeedbackController@addFeedback');
-Route::post('/virtualmarket/feedback', 'UserFeedbackController@getAllFeedback');
+Route::get('/virtualmarket/feedback', 'UserFeedbackController@getAllFeedback');
 
 //Route for Order Confirmation
 Route::get('/virtualmarket/confirmation/{id}', 'ConfirmationController@getDetailOrder');
