@@ -116,6 +116,7 @@ class PaymentController extends Controller {
         $data = json_decode($body, true);
 
         $tarif = $data['rows'][0]['elements'][0]['distance']['value'];
+
         $tarif *= $tarif_jarak->constant;
         $temp_tarif = $tarif/1000;
         $tarif = intval($temp_tarif) + $tarif_dasar->constant;

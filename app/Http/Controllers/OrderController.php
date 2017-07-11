@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
-use App\Garendong;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Response;
@@ -77,11 +77,12 @@ class OrderController extends Controller {
 
     public function getStateStatus($id) {
         $order = Order::find($id);
-        // $garendong = Garendong::find($order->garendong_id);
+        $garendong = User::find($order->garendong_id);
 
         return Response::json(array(
             'error'=>false,
-            'order'=>$order),
+            'order'=>$order,
+            'garendong'=>$garendong->name),
             200
         );
     }
