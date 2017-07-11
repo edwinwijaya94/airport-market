@@ -66,6 +66,7 @@ class AllocationController extends Controller {
     		}
             $arOrderId[$counter] = $order->id;
     		$counter++;
+            $order->garendong_id = 1;
     	}
 
     	$client = new Client();
@@ -115,6 +116,7 @@ class AllocationController extends Controller {
 
 
 
-    	return 'Success';
+
+    	return 'Alokasi berdasarkan jarak berhasil';
     }
 }
