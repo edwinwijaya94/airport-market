@@ -38,6 +38,7 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 // allow CORS
 header('Access-Control-Allow-Origin: *');  
 header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: content-type');
 
 /*
 |--------------------------------------------------------------------------
