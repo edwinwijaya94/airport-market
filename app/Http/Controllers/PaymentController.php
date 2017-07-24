@@ -123,4 +123,25 @@ class PaymentController extends Controller {
 
         return $tarif;
     }
+
+    public function getAllRates(){
+        $rates = Pay::all();
+        return response()->json($rates);
+    }
+
+    public function updateRates(Request $request){
+        $tarif_dasar = Pay::find(1);
+        $tarif_dasar->constant = $request->tarif_dasar;
+        $tarif_dasar->save();
+
+        $tarif_jarak = Pay::find(2);
+        $tarif_jarak->constant = $request->tarif_jarak;
+        $tarif_jarak->save();
+
+        return Response::json(array(
+            'error'=>false,
+            'message'=>"Tarif berhasil diubah"),
+            200
+        );
+    }
 }
