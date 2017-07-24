@@ -9,7 +9,6 @@ use App\CustomDistance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
-use Phpml\Clustering\DBSCAN;
 use Response;
 use DateTime;
 

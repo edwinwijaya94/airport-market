@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\User;
+use App\Garendong;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Response;

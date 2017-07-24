@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\OrderLine;
 use App\Order;
 use App\Product;
+use App\Unit;
 use Illuminate\Http\Request;
 use Response;
 
@@ -43,6 +44,9 @@ class OrderLineController extends Controller
             $item = $item->product;
         }
 
+        foreach ($order_line as $apapun) {
+            $apapun = $apapun->unit;
+        }
         // foreach ($order_line as $item) {
         //     $item = $item->order;
         // }
