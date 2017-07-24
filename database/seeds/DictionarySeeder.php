@@ -32,6 +32,9 @@ class DictionarySeeder extends Seeder
             ['abbreviation' => 'pnjng', 'word' => 'panjang'],
             ['abbreviation' => 'pnjang', 'word' => 'panjang'],
             ['abbreviation' => 'kcngpjg', 'word' => 'kacang panjang'],
+            ['abbreviation' => 'kg', 'word' => 'kilogram'],
+            ['abbreviation' => 'gr', 'word' => 'gram'],
+            ['abbreviation' => 'ikt', 'word' => 'ikat'],
         ]);
 
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Role;
 use App\Garendong;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,6 +11,52 @@ use Response;
 
 class UserController extends Controller
 {
+
+    public function userLogin(Request $request) {
+        //get user from database
+        $user = User::where([
+                ['username', '=', strtolower($request->username)],
+                ['password', '=', $request->password]
+            ])->first();
+        if($user != NULL) { // if user exsist
+           return Response::json(array(
+                'error'=>false,
+                'user_id'=>$user->id),
+                200
+            );
+        } else {
+            return Response::json(array(
+                'error'=>true,
+                'message'=>"Anda belum terdaftar. Silahkan lakukan Registrasi")
+            );
+        }
+
+    }
+
+    public function login(Request $request) {
+        $username = $request->username;
+        $password = $request->password;
+
+        if (Auth::attempt(['username' => $username, 'password' => $password])) {
+            // Authentication passed...
+            return Response::json(array(
+                'error'=>false,
+                'user_id'=>$user->id),
+                200
+            );
+        } else {
+             return Response::json(array(
+                'error'=>true,
+                'message'=>"Anda belum terdaftar. Silahkan lakukan Registrasi")
+            );
+        }
+
+    }
+
+    public function logout() {
+        Auth::logout();
+        return "Logout..";
+    }
 
     public function getAllUser() {
         $user = User::all();
@@ -30,13 +77,21 @@ class UserController extends Controller
 
     }
 
+    public function getBuyerRoleID() {
+        $role = Role::where('name', 'Pembeli')->first();
+
+        return $role->id;
+    }
+
     public function addUser(Request $request) {
         //add order to database
         $user = new User();
+        $user->role_id = $request->role_id;
         $user->name = strtolower($request->name);
         $user->username = strtolower($request->username);
         $user->address = $request->address;
         $user->phone_number = $request->phone;
+        //$user->password = bcrypt($request->password);
         $user->password = $request->password;
         $user->save();
 
@@ -53,26 +108,6 @@ class UserController extends Controller
                     );
 
         return "Profile Anda berhasil diubah";
-    }
-
-    public function login(Request $request) {
-        //get user from database
-        $user = User::where([
-                ['username', '=', strtolower($request->username)],
-                ['password', '=', $request->password]
-            ])->first();
-        if($user != NULL) { // if user exsist
-           return Response::json(array(
-                'error'=>false,
-                'user_id'=>$user->id),
-                200
-            );
-        } else {
-            return Response::json(array(
-                'error'=>true,
-                'message'=>"Anda belum terdaftar. Silahkan lakukan Registrasi")
-            );
-        }
     }
 
     public function addGarendong(Request $request) {

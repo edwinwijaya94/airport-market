@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\User;
+use App\Garendong;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Response;
@@ -77,12 +78,16 @@ class OrderController extends Controller {
 
     public function getStateStatus($id) {
         $order = Order::find($id);
-        $garendong = User::find($order->garendong_id);
+        $garendong = User::select('name')->where('id', $order->garendong_id)->first();
+        // check garendong empty or not
+        if (empty($garendong)) {
+            $garendong = "";
+        }
 
         return Response::json(array(
             'error'=>false,
             'order'=>$order,
-            'garendong'=>$garendong->name),
+            'garendong'=>$garendong),
             200
         );
     }
@@ -114,5 +119,14 @@ class OrderController extends Controller {
             'garendong'=>$garendong->toArray()),
             200
         );
+    }
+
+    public function getLastOrderID(Request $request) {
+        $order_id = Order::select('id')
+                    ->where('customer_id', $request->customer_id)
+                    ->orderBy('id', 'desc')
+                    ->first();
+
+        return $order_id;
     }
 }

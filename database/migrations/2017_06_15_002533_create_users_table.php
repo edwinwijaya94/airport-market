@@ -15,12 +15,14 @@ class CreateUsersTable extends Migration
     {
         Schema::connection('pgsql_2')->create('users', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('role_id')->unsigned();
             $table->string('name');
-            $table->string('username')->unique();
-            $table->string('email')->nullable();
-            $table->string('address');
-            $table->string('phone_number')->unique();
+            $table->string('email')->unique()->nullable();
             $table->string('password');
+            $table->string('username')->unique();
+            $table->string('phone_number')->unique();
+            $table->text('address');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

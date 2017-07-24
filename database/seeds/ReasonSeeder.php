@@ -12,9 +12,9 @@ class ReasonSeeder extends Seeder
     public function run()
     {
         DB::connection('pgsql')->table('reasons')->insert([
-            ['reason' => 'Pelayanan garendong buruk'],
-            ['reason' => 'Kualitas pesanan buruk'],
-            ['reason' => 'Durasi pemesanan lama'],
+            ['reason' => 'pelayanan garendong buruk'],
+            ['reason' => 'kualitas pesanan buruk'],
+            ['reason' => 'durasi pemesanan lama'],
         ]);
     }
 }

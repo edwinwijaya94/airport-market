@@ -45,7 +45,7 @@ class CategoryController extends Controller {
         $imageName = time().'_'.$fileImage->getClientOriginalName();
         $fileImage->move(public_path('images/categories'), $imageName);
         //add category to database
-        $category->name = $request->category_name;
+        $category->name = strtolower($request->category_name);
         $category->category_img = $imageName;
         $category->save();
 
@@ -74,7 +74,7 @@ class CategoryController extends Controller {
             $imageName = $oldImage;
         }
         //add category to database
-		$category->name = $request->category_name;
+		$category->name = strtolower($request->category_name);
 		$category->category_img = $imageName;
 		$category->save();
 
