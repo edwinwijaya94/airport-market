@@ -36,10 +36,20 @@ class UnitController extends Controller {
         );
     }
 
+    public function getCommonUnit() {
+        //retrieve unit based on id
+        $unit = Unit::where('unit_type', 'common')->get();
+        
+        return Response::json(array(
+            'units'=>$unit->toArray()),
+            200
+        );
+    }
+
     public function addUnit(Request $request) {
         //add unit to database
         $unit = new Unit();
-        $unit->unit = $request->unit_name;
+        $unit->unit = strtolower($request->unit_name);
         $unit->unit_type = $request->unit_type;
         $convert_gram = $request->convert_gram;
         $unit->save();
@@ -61,7 +71,7 @@ class UnitController extends Controller {
         $unit = Unit::find($id);
         $unitOld = $unit->unit_type;
         $unitNow = $request->unit_type;
-        $unit->unit = $request->unit_name;
+        $unit->unit = strtolower($request->unit_name);
         $unit->unit_type = $unitNow;
         $convert_gram = $request->convert_gram;
         $unit->save();

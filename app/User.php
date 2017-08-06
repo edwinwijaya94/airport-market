@@ -7,10 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 // class User extends Authenticatable
 class User extends Model
 {
-    protected $connection = 'pgsql_2';
-
-    // use Notifiable;
-    // public $table = "users";
+    // //use Notifiable;
 
     // /**
     //  * The attributes that are mass assignable.
@@ -18,7 +15,7 @@ class User extends Model
     //  * @var array
     //  */
     // protected $fillable = [
-    //     'username', 'password',
+    //     'username', 'password'
     // ];
 
     // /**
@@ -29,4 +26,7 @@ class User extends Model
     // protected $hidden = [
     //     'password', 'remember_token',
     // ];
+
+    protected $connection = 'pgsql_2';
+    protected $table = 'users';
 }

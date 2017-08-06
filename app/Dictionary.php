@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SMS extends Model
+class Dictionary extends Model
 {
-    public $table = "sms";
+    public $table = "dictionaries";
 }

@@ -9,9 +9,9 @@ class Order extends Model
 {
     public $table = "orders";
 
-    public function status() {
-    	return $this->hasOne('App\OrderStatus');
-    }
+    // public function status() {
+    // 	return $this->hasOne('App\OrderStatus');
+    // }
 
     public function buyer() {
     	return $this->hasOne('App\User');
@@ -31,5 +31,9 @@ class Order extends Model
 
     public function getUpdatedAtAttribute($date) {
         return Carbon::parse($date)->format('l, d F Y H:i');
+    }
+
+    public function status() {
+        return $this->belongsTo('App\OrderStatus', 'order_status');
     }
 }

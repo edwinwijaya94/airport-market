@@ -20,5 +20,7 @@ class VerifyCsrfToken extends BaseVerifier
         'api/virtualmarket/orderline/*',
         'api/virtualmarket/user/edit',
         'api/virtualmarket/garendong/register',
+        'api/virtualmarket/cart/add',
+        'api/virtualmarket/cart/edit',
     ];
 }

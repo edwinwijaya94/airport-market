@@ -20,6 +20,7 @@ class ProductController extends Controller {
     public function getAllProductByCategory(Request $request, $id) {
     	//retrieve all products based on cateory
     	$products = Category::find($id)->products;
+
         foreach($products as $product) {
             $product->default_unit_id = $product->unit->unit;
             $product->name = ucwords($product->name);
@@ -35,6 +36,8 @@ class ProductController extends Controller {
     public function getAllProduct(Request $request) {
         //retrieve all products from database
         $products = Product::all();
+        foreach($products as $product) 
+            $product->name = ucwords($product->name);
 
         return Response::json(array(
             'error'=>false,
@@ -61,6 +64,7 @@ class ProductController extends Controller {
         $results = Product::where('name', 'ILIKE', '%'.$keyword.'%')->get();
         foreach($results as $result)
             $result->default_unit_id = $result->unit->unit;
+            $result->name = ucwords($result->name);
 
         return Response::json(array(
             'error'=>false,
@@ -118,7 +122,7 @@ class ProductController extends Controller {
 
         //add product to database
     	$product = new Product();
-    	$product->name = $request->product_name;
+    	$product->name = strtolower($request->product_name);
     	$product->default_quantity = $default_quantity;
         $product->default_unit_id = $default_unit;
     	$product->price_min = $price;
@@ -174,7 +178,7 @@ class ProductController extends Controller {
             $imageName = $oldImage;
         }
         //add product to database
-        $product->name = $request->product_name;
+        $product->name = strtolower($request->product_name);
         $product->default_quantity = $default_quantity;
         $product->default_unit_id = $default_unit;
         //compare price update with price in table for price min and price max

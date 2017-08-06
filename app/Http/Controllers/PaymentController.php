@@ -137,5 +137,11 @@ class PaymentController extends Controller {
         $tarif_jarak = Pay::find(2);
         $tarif_jarak->constant = $request->tarif_jarak;
         $tarif_jarak->save();
+
+        return Response::json(array(
+            'error'=>false,
+            'message'=>"Tarif berhasil diubah"),
+            200
+        );
     }
 }

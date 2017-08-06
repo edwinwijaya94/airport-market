@@ -6,20 +6,21 @@ use App\OrderLine;
 use App\Order;
 use App\Product;
 use App\Unit;
+use Log;
 use Illuminate\Http\Request;
 use Response;
 
 class OrderLineController extends Controller
 {
-    public function addOrderLine(Request $request, $id) {
+    public function addOrderLine(Request $request) {
         $order_line = json_decode($request->order_line, true);
         foreach ($order_line as $item) {
             $orderLine = new OrderLine();
-            $orderLine->order_id = $id;
-            $orderLine->product_id = $item['productId'];
+            $orderLine->order_id = $request->order_id;
+            $orderLine->product_id = $item['product_id'];
             $orderLine->quantity = $item['quantity'];
-            $orderLine->unit_id = $item['unitId'];
-            $orderLine->is_priority = $item['isPriority'];
+            $orderLine->unit_id = $item['unit_id'];
+            $orderLine->is_priority = $item['is_priority'];
             $orderLine->save();
         }
         return "Pesanan Anda berhasil diproses";
@@ -42,14 +43,12 @@ class OrderLineController extends Controller
 
         foreach ($order_line as $item) {
             $item = $item->product;
+            $item->name = ucwords($item->name);
         }
 
-        foreach ($order_line as $apapun) {
-            $apapun = $apapun->unit;
+        foreach ($order_line as $item) {
+            $item = $item->unit;
         }
-        // foreach ($order_line as $item) {
-        //     $item = $item->order;
-        // }
 
         return response()->json($order_line);
     }

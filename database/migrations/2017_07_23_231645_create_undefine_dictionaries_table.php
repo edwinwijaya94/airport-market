@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrderStatusesTable extends Migration
+class CreateUndefineDictionariesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateOrderStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_statuses', function (Blueprint $table) {
+        Schema::create('undefine_words', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->boolean('status');
+            $table->string('undefine_word', 30);
+            $table->string('word', 30)->default("");
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateOrderStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_statuses');
+        Schema::dropIfExists('undefine_words');
     }
 }

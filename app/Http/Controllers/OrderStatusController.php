@@ -9,9 +9,9 @@ use Response;
 
 class OrderStatusController extends Controller
 {
-	public function getAllStatus() {
+	public function getAllSuccessStatus() {
 	//retrieve all statuses from database
-		$statuses = OrderStatus::all();
+		$statuses = OrderStatus::where('status', '=', true)->get();
     	
     	return Response::json(array(
     		'statuses'=>$statuses->toArray()),
