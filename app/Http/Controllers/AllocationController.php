@@ -6,7 +6,6 @@ use App\Order;
 use App\Garendong;
 use App\User;
 use Phpml\Clustering\KMeans;
-use 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
