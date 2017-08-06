@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('phone_number')->unique();
             $table->text('address');
             $table->text('address_note')->nullable();
+            $table->integer('fake')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
