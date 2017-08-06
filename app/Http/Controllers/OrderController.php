@@ -106,7 +106,7 @@ class OrderController extends Controller {
         $order->save();
 
         //add rating to garendong table
-        $garendong_id = $order_id->garendong_id;
+        $garendong_id = $order->garendong_id;
         $garendong = Garendong::find($garendong_id);
         $garendong->rating = $garendong->rating + $request->rating;
         $garendong->num_rating = $garendong->num_rating + 1;
