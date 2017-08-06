@@ -20,6 +20,7 @@ class ProductController extends Controller {
     public function getAllProductByCategory(Request $request, $id) {
     	//retrieve all products based on cateory
     	$products = Category::find($id)->products;
+
         foreach($products as $product) {
             $product->default_unit_id = $product->unit->unit;
             $product->name = ucwords($product->name);

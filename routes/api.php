@@ -17,10 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Login and Logour
-Route::post('/virtualmarket/login', 'UserController@login');
-Route::get('/virtualmarket/logout', 'UserController@logout');
-
 //Route for Users
 Route::get('/virtualmarket/user/all', 'UserController@getAllUser');
 Route::get('/virtualmarket/user/role', 'UserController@getBuyerRoleID');
@@ -78,7 +74,6 @@ Route::post('/virtualmarket/orderline/updateStatus', 'OrderLineController@update
 
 //Route for Shopping List
 Route::post('/virtualmarket/cart', 'CartController@getCartByUserID');
-Route::post('/virtualmarket/cart/count', 'CartController@getCountCart');
 Route::post('/virtualmarket/cart/add', 'CartController@addCart');
 Route::post('/virtualmarket/cart/edit', 'CartController@editCartByID');
 Route::post('/virtualmarket/cart/edit/priority', 'CartController@editPriorityByID');
@@ -86,14 +81,14 @@ Route::post('/virtualmarket/cart/delete', 'CartController@deleteCartByID');
 Route::post('/virtualmarket/cart/remove', 'CartController@deleteCartByUserID');
 
 //Route for Order Status
-Route::get('/virtualmarket/status', 'OrderStatusController@getAllStatus');
+Route::get('/virtualmarket/status', 'OrderStatusController@getAllSuccessStatus');
 Route::get('/virtualmarket/order/{id}', 'OrderController@getStateStatus');
 
 //Route for Reason
 Route::get('/virtualmarket/reasons', 'ReasonController@getAllReasons');
 
 //Route for Feedback
-Route::get('/virtualmarket/feedback/history', 'OrderController@getOrderHistory');
+Route::get('/virtualmarket/feedback/history/{id}', 'OrderController@getOrderHistory');
 Route::post('/virtualmarket/rating/add', 'OrderController@addRating');
 Route::post('/virtualmarket/feedback/add', 'UserFeedbackController@addFeedback');
 Route::get('/virtualmarket/feedback', 'UserFeedbackController@getAllFeedback');
@@ -116,9 +111,8 @@ Route::post('/virtualmarket/updateRates', 'PaymentController@updateRates');
 
 //Route for SMS
 Route::get('virtualmarket/sms/all', 'SMSController@getAllSMS');
-// Route::get('/sms/send', 'SMSController@sendMessage');
+Route::get('/sms/send/{text}/{phone}', 'SMSController@sendMessage');
 Route::post('virtualmarket/sms/receive', 'SMSController@receiveMessage');
-
 
 //Route for Dictionary
 Route::get('virtualmarket/dictionary', 'DictionaryController@getAllDictionary');
@@ -126,3 +120,4 @@ Route::post('virtualmarket/dictionary/add', 'DictionaryController@addDictionary'
 
 //Route for Undefine Word
 Route::get('virtualmarket/undefine/word', 'UndefineWordController@getAllUndefineWord');
+Route::get('virtualmarket/undefine/word/delete/{id}', 'UndefineWordController@deleteUndefineWord');

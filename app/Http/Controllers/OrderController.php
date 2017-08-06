@@ -77,11 +77,15 @@ class OrderController extends Controller {
     }
 
     public function getStateStatus($id) {
+        //get order, garendon name, and status from database
         $order = Order::find($id);
         $garendong = User::select('name')->where('id', $order->garendong_id)->first();
+        $status = $order->status;
         // check garendong empty or not
         if (empty($garendong)) {
-            $garendong = "";
+            $garendong = "Gerry Kastogi";
+        } else {
+            $garendong = ucwords($garendong->name);
         }
 
         return Response::json(array(
@@ -93,16 +97,29 @@ class OrderController extends Controller {
     }
 
     public function addRating(Request $request) {
+        //add rating to order table
         $order_id = $request->order_id;
         $order = Order::find($order_id);
         $order->rating = $request->rating;
         $order->save();
+
+        //add rating to garendong table
+        $garendong_id = $order_id->garendong_id;
+        $garendong = Garendong::find($garendong_id);
+        $garendong->rating = $garendong->rating + $request->rating;
+        $garendong->num_rating = $garendong->num_rating + 1;
+        $garendong->save();
         
         return "Terima kasih atas umpan balik Anda";
     }
 
-    public function getOrderHistory() {
-        $histories = Order::where('order_status', '=', 4)->get();
+    public function getOrderHistory($id) {
+        //get order history with success status and rating still null
+        $histories = Order::where([
+            ['order_status', '=', 4],
+            ['customer_id', '=', $id],
+            ['rating', '=', null],
+        ])->latest()->take(10)->get();        
 
         return Response::json(array(
             'error'=>false,
@@ -112,6 +129,7 @@ class OrderController extends Controller {
     }
 
     public function getAllGarendong() {
+        //get all garendong from database
         $garendong = Garendong::all();
 
         return Response::json(array(
@@ -122,6 +140,7 @@ class OrderController extends Controller {
     }
 
     public function getLastOrderID(Request $request) {
+        //get last order from one user
         $order_id = Order::select('id')
                     ->where('customer_id', $request->customer_id)
                     ->orderBy('id', 'desc')

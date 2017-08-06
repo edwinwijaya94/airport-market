@@ -9,6 +9,6 @@ class Category extends Model
     public $table = "categories";
     
     public function products() {
-    	return $this->hasMany('App\Product');
+    	return $this->hasMany('App\Product')->orderBy('name', 'ASC');
     }
 }

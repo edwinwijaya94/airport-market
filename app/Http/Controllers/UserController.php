@@ -14,48 +14,28 @@ class UserController extends Controller
 
     public function userLogin(Request $request) {
         //get user from database
-        $user = User::where([
-                ['username', '=', strtolower($request->username)],
-                ['password', '=', $request->password]
-            ])->first();
-        if($user != NULL) { // if user exsist
-           return Response::json(array(
-                'error'=>false,
-                'user_id'=>$user->id),
-                200
-            );
+        $user = User::where('username', strtolower($request->username))->first();
+
+        if($user != NULL) { //user exsist
+
+            if ($request->password == $user->password) { //password true
+                return Response::json(array(
+                    'error'=>false,
+                    'user_id'=>$user->id),
+                    200
+                );    
+            } else { //password false
+                return Response::json(array(
+                    'error'=>true,
+                    'message'=>"Password Anda Salah")
+                );
+            }            
         } else {
             return Response::json(array(
                 'error'=>true,
                 'message'=>"Anda belum terdaftar. Silahkan lakukan Registrasi")
             );
         }
-
-    }
-
-    public function login(Request $request) {
-        $username = $request->username;
-        $password = $request->password;
-
-        if (Auth::attempt(['username' => $username, 'password' => $password])) {
-            // Authentication passed...
-            return Response::json(array(
-                'error'=>false,
-                'user_id'=>$user->id),
-                200
-            );
-        } else {
-             return Response::json(array(
-                'error'=>true,
-                'message'=>"Anda belum terdaftar. Silahkan lakukan Registrasi")
-            );
-        }
-
-    }
-
-    public function logout() {
-        Auth::logout();
-        return "Logout..";
     }
 
     public function getAllUser() {
@@ -78,7 +58,7 @@ class UserController extends Controller
     }
 
     public function getBuyerRoleID() {
-        $role = Role::where('name', 'Pembeli')->first();
+        $role = Role::where('name', 'pembeli')->first();
 
         return $role->id;
     }
@@ -86,12 +66,13 @@ class UserController extends Controller
     public function addUser(Request $request) {
         //add order to database
         $user = new User();
-        $user->role_id = $request->role_id;
+        $user->role_id = self::getBuyerRoleID();
         $user->name = strtolower($request->name);
         $user->username = strtolower($request->username);
+        $user->email = $request->email;
         $user->address = $request->address;
+        $user->address_note = strtolower($request->address_note);
         $user->phone_number = $request->phone;
-        //$user->password = bcrypt($request->password);
         $user->password = $request->password;
         $user->save();
 
@@ -104,6 +85,7 @@ class UserController extends Controller
             ->update(array(
                         'name' => strtolower($request->name),
                         'address' => $request->address,
+                        'address_note' => $request->addressNote,
                         'phone_number' => $request->phone)
                     );
 
@@ -114,6 +96,7 @@ class UserController extends Controller
         //add order to database
         $user = new User();
         $user->name = strtolower($request->name);
+        $user->role_id = 2;
         $user->username = strtolower($request->username);
         $user->address = $request->address;
         $user->phone_number = $request->phone;

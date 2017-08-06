@@ -42,11 +42,12 @@ class OrderLineController extends Controller
 
         foreach ($order_line as $item) {
             $item = $item->product;
+            $item->name = ucwords($item->name);
         }
 
-        // foreach ($order_line as $item) {
-        //     $item = $item->order;
-        // }
+        foreach ($order_line as $item) {
+            $item = $item->unit;
+        }
 
         return response()->json($order_line);
     }

@@ -12,10 +12,12 @@ class OrderStatusSeeder extends Seeder
     public function run()
     {
         DB::connection('pgsql')->table('order_statuses')->insert([
-            ['status' => 'Pesanan Anda berhasil diproses'],
-            ['status' => 'Pesanan Anda sedang dibelanjakan'],
-            ['status' => 'Pesanan Anda sedang dikirim'],
-            ['status' => 'Pesanan Anda sudah sampai'],
+            ['name' => 'Pesanan Anda berhasil diproses', 'status' => true, 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['name' => 'Pesanan Anda sedang dibelanjakan', 'status' => true, 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['name' => 'Pesanan Anda sedang dikirim', 'status' => true, 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['name' => 'Pesanan Anda sudah sampai', 'status' => true, 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['name' => 'Barang prioritas tidak tersedia', 'status' => false, 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['name' => 'Tidak ada orang di rumah', 'status' => false, 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
         ]);
     }
 }

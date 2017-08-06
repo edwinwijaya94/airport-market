@@ -11,6 +11,9 @@ class ReasonController extends Controller
     public function getAllReasons() {
         //retrieve all reasons from database
         $reasons = Reason::all();
+        foreach ($reasons as $reason) {
+        	$reason->reason = ucwords($reason->reason);	
+        }
         
         return Response::json(array(
             'reasons'=>$reasons->toArray()),

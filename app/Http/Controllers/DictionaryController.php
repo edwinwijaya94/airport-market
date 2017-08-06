@@ -27,6 +27,7 @@ class SMSController extends Controller
         $dictionary->word = $request->word;
         $dictionary->save();
 
-        return "Singkatan berhasil dimasukkan";
+        //redirect to delete undefine word
+        return redirect()->action('UndefineWordController@deleteUndefineWord', ['id' => $request->id]);
     }
 }

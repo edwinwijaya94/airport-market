@@ -120,13 +120,10 @@ class SMSController extends Controller
             $unit = trim($matches[2], " ");
             $unit_id = self::findUnitID($unit);
             if ($product_id == NULL) {
-                var_dump('product');
                 array_push($undefine_array, $product);
             } else if ($unit_id == NULL) {
-                var_dump('unit');
                 array_push($undefine_aray, $unit);
             } else if ($product_id == NULL && $unit_id == NULL) {
-                var_dump('product & unit');
                 array_push($undefine_array, $product);
                 array_push($undefine_array, $unit);
             }else {
@@ -276,7 +273,7 @@ class SMSController extends Controller
                 if ($orderLine == NULL) {
                     //send message to user that abbreviaion not define in system
                     Log::info('undefine word');
-                    $text = "[PAYAKUMBUH] Singkatan Anda tidak dimengerti oleh sistem. Silahkan kirim ulang pesanan Anda tanpa menggunakan singkatan.";
+                    $text = "[PAYAKUMBUH] Mohon maaf barang yang Anda pesan tidak tersedia";
                     self::sendMessage($text, $sender_phone);
                 } else {
                     $total_product = count($order_line);
@@ -314,7 +311,7 @@ class SMSController extends Controller
         } else {
             Log::info('wrong format');
             //send message to user that wrong format
-            $text = "[PAYAKUMBUH] Format SMS Anda salah. Silahkan kirim ulang SMS Anda dengan format yang benar.";
+            $text = "[PAYAKUMBUH] Format SMS Anda salah. Silahkan kirim ulang SMS Anda dengan format yang benar";
             self::sendMessage($text, $sender_phone);
 
         }

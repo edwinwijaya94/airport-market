@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('phone_number')->unique();
             $table->text('address');
+            $table->text('address_note')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
