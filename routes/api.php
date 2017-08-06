@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/virtualmarket/user/all', 'UserController@getAllUser');
 Route::post('/virtualmarket/user', 'UserController@getUserByID');
 Route::post('/virtualmarket/user/register', 'UserController@addUser');
-Route::post('/virtualmarket/user/login', 'UserController@login');
+Route::post('/virtualmarket/user/login', 'UserController@userLogin');
 Route::post('/virtualmarket/user/edit', 'UserController@updateUser');
 Route::post('/virtualmarket/garendong/register', 'UserController@addGarendong');
 Route::post('/virtualmarket/garendong/login', 'UserController@garendongLogin');
@@ -80,7 +80,7 @@ Route::get('/virtualmarket/order/{id}', 'OrderController@getStateStatus');
 Route::get('/virtualmarket/reasons', 'ReasonController@getAllReasons');
 
 //Route for Feedback
-Route::get('/virtualmarket/feedback/history', 'OrderController@getOrderHistory');
+Route::get('/virtualmarket/feedback/history/{id}', 'OrderController@getOrderHistory');
 Route::post('/virtualmarket/rating/add', 'OrderController@addRating');
 Route::post('/virtualmarket/feedback/add', 'UserFeedbackController@addFeedback');
 Route::get('/virtualmarket/feedback', 'UserFeedbackController@getAllFeedback');

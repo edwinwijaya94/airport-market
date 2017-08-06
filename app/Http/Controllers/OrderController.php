@@ -80,11 +80,11 @@ class OrderController extends Controller {
         } else if ($request->status_id == 2131558547){
             $order->order_status = 6;
             $order->save();
-            return redirect()->action('SMSController@sendMessage', ['text' => "[PAYAKUMBUH] Status pesanan Anda\nPengiriman gagal", 'phone' => $phone ]);;
+            return redirect()->action('SMSController@sendMessage', ['text' => "[PAYAKUMBUH]\nStatus pesanan Anda:\nPengiriman gagal", 'phone' => $phone ]);;
         } else if ($request->status_id == 2131558547){
             $order->order_status = 6;
             $order->save();
-            return redirect()->action('SMSController@sendMessage', ['text' => "[PAYAKUMBUH] Status pesanan Anda\nPengiriman gagal", 'phone' => $phone ]);;
+            return redirect()->action('SMSController@sendMessage', ['text' => "[PAYAKUMBUH]\nStatus pesanan Anda:\nPengiriman gagal", 'phone' => $phone ]);;
         }
         
         // return redirect(); buat SMS
@@ -160,7 +160,7 @@ class OrderController extends Controller {
         $order->order_status = 5;
         $order->save();
 
-        return redirect()->action('SMSController@sendMessage', ['text' => "[PAYAKUMBUH] Status pesanan Anda\nBarang prioritas tidak tersedia", 'phone' => $phone ]);;
+        return redirect()->action('SMSController@sendMessage', ['text' => "[PAYAKUMBUH]\nStatus pesanan Anda:\nBarang prioritas tidak tersedia", 'phone' => $phone ]);;
     }
 
     public function getLastOrderID(Request $request) {
