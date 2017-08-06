@@ -21,28 +21,28 @@ class PaymentController extends Controller {
     	return 'test';
     }
 
-    public function countPayment(){
-    	$jumlah_order = Pay::find(1);
-    	$upah_dasar = Pay::find(2);
-    	$garendongs = Garendong::all();
+    // public function countPayment(){
+    // 	$jumlah_order = Pay::find(1);
+    // 	$upah_dasar = Pay::find(2);
+    // 	$garendongs = Garendong::all();
 
-    	foreach ($garendongs as $garendong) {
-    		if ($garendong->tarif == 0){
-    			if ($garendong->number_of_allocation != 0){
-    				$garendong->tarif += ($jumlah_order->constant * $garendong->number_of_allocation) + $upah_dasar->constant;
-    				$garendong->save();	
-    			}
-    		} else {
-    			if ($garendong->number_of_allocation != 0){
-	    			$garendong->tarif -= $garendong->tarif;
-	    			$garendong->tarif += ($jumlah_order->constant * $garendong->number_of_allocation) + $upah_dasar->constant;
-	    			$garendong->save();
-	    		}
-    		}
-    	}
+    // 	foreach ($garendongs as $garendong) {
+    // 		if ($garendong->tarif == 0){
+    // 			if ($garendong->number_of_allocation != 0){
+    // 				$garendong->tarif += ($jumlah_order->constant * $garendong->number_of_allocation) + $upah_dasar->constant;
+    // 				$garendong->save();	
+    // 			}
+    // 		} else {
+    // 			if ($garendong->number_of_allocation != 0){
+	   //  			$garendong->tarif -= $garendong->tarif;
+	   //  			$garendong->tarif += ($jumlah_order->constant * $garendong->number_of_allocation) + $upah_dasar->constant;
+	   //  			$garendong->save();
+	   //  		}
+    // 		}
+    // 	}
 
-    	return 'Tarif Berhasil Dihitung';
-    }
+    // 	return 'Tarif Berhasil Dihitung';
+    // }
 
     public function countRates(){
         $origin = "&origins=";

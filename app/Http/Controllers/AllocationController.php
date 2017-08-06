@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\Garendong;
 use App\User;
-use App\CustomDistance;
+use Phpml\Clustering\KMeans;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
@@ -42,7 +42,6 @@ class AllocationController extends Controller {
     }
 
     public function allocateGarendongByDistance() {
-        $maxDistance = 6000;
     	$counter=0;
         $arOrderId=array();
     	$origin = "&origins=";
@@ -113,9 +112,55 @@ class AllocationController extends Controller {
     	// }
     	// echo "<br>";
 
-
-
-
     	return 'Alokasi berdasarkan jarak berhasil';
+    }
+
+    public function allocateGarendongKMeans() {
+        $matrixLocation = array();
+        $arrayLocation = array();
+        $key = "&key=AIzaSyAT65_OGp-KOIb8aTd9uc3Whh3IbYrVEAY";
+        $address = "address=";
+        $client = new Client();
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?";
+
+        $orders = Order::where('garendong_id', '=', 0)
+                        ->get();
+        $numOrders = count($orders);
+
+        foreach ($orders as $order) {
+            $user = User::find($order->customer_id);
+            $address .= urlencode($user->address);
+            $url .= $address . $key;
+            $response = $client->get($url);
+
+            $body = $response->getBody();
+
+            $data = json_decode($body, true);
+
+            array_push($arrayLocation, $data['results'][0]['geometry']['location']['lat'], 
+                            $data['results'][0]['geometry']['location']['lng']);
+           
+            $address = "address=";
+            $url = "https://maps.googleapis.com/maps/api/geocode/json?";
+            usleep(200000);
+        }
+        $counter = 0;
+        while ($counter < $numOrders*2) {
+            array_push($matrixLocation, array($arrayLocation[$counter], $arrayLocation[$counter+1]));
+            $counter += 2;
+        }
+
+        // for ($row=0; $row<$numOrders; $row++) { 
+        //     for ($column=0; $column<2; $column++) { 
+        //         echo $matrixLocation[$row][$column], "&nbsp &nbsp &nbsp &nbsp &nbsp";
+        //     }
+        //     echo "<br>";
+        // }
+        // echo "<br>";
+
+        $kmeans = new KMeans(2);
+        var_dump($kmeans->cluster($matrixLocation));
+
+        return 'Success';
     }
 }

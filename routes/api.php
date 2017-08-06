@@ -24,6 +24,7 @@ Route::post('/virtualmarket/user/register', 'UserController@addUser');
 Route::post('/virtualmarket/user/login', 'UserController@login');
 Route::post('/virtualmarket/user/edit', 'UserController@updateUser');
 Route::post('/virtualmarket/garendong/register', 'UserController@addGarendong');
+Route::post('/virtualmarket/garendong/login', 'UserController@garendongLogin');
 
 //Route for Categories
 Route::get('/virtualmarket/categories', 'CategoryController@getAllCategory');
@@ -61,6 +62,7 @@ Route::post('/virtualmarket/order/add', 'OrderController@addOrder');
 Route::post('/virtualmarket/order/updateDeliveryStatus', 'OrderController@updateDeliveryStatus');
 Route::post('/virtualmarket/order/updateConfirmationStatus', 'OrderController@updateConfirmationStatus');
 Route::get('/virtualmarket/garendong', 'OrderController@getAllGarendong');
+Route::post('/virtualmarket/order/updatePriorityStatus', 'OrderController@updatePriorityStatus');
 
 
 //Route for Order Line
@@ -89,6 +91,7 @@ Route::get('/virtualmarket/confirmation/{id}', 'ConfirmationController@getDetail
 //Route for Allocating Garendong
 Route::get('/virtualmarket/allocation', 'AllocationController@allocateGarendong');
 Route::get('/virtualmarket/allocationByDistance', 'AllocationController@allocateGarendongByDistance');
+Route::get('/virtualmarket/allocationKMeans', 'AllocationController@allocateGarendongKMeans');
 
 //Route for image
 Route::get('/virtualmarket/images/{folder}/{filename}', 'ProductController@getImage');

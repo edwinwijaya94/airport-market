@@ -37,6 +37,8 @@ class OrderController extends Controller {
         $order = Order::where([
             ['garendong_id', '=', $id],
             ['order_status', '<>', 4],
+            ['order_status', '<>', 5],
+            ['order_status', '<>', 6]
             ])->get();
 
         $numberAllocation = Order::where('garendong_id', '=', $id)
@@ -115,5 +117,13 @@ class OrderController extends Controller {
             'garendong'=>$garendong->toArray()),
             200
         );
+    }
+
+    public function updatePriorityStatus(Request $request){
+        $order = Order::find($request->id);
+        $order->order_status = 5;
+        $order->save();
+
+        return 'Status berhasil diupdate';
     }
 }

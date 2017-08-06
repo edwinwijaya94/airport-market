@@ -96,4 +96,25 @@ class UserController extends Controller
 
         return "Selamat Anda sudah terdaftar di Fresh Market";
     }
+
+    public function garendongLogin(Request $request){
+        $user = User::where([
+                ['username', '=', strtolower($request->username)],
+                ['password', '=', $request->password]
+            ])->first();
+        if($user != NULL) { // if user exsist
+            $garendong = Garendong::where('user_id', '=', $user->id)
+                            ->first();
+            return Response::json(array(
+                'error'=>false,
+                'garendong_id'=>$garendong->id),
+                200
+            );
+        } else {
+            return Response::json(array(
+                'error'=>true,
+                'message'=>"Anda belum terdaftar. Silahkan lakukan Registrasi")
+            );
+        }
+    }
 }
