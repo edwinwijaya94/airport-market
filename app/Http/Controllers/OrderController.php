@@ -71,7 +71,13 @@ class OrderController extends Controller {
 
     public function updateConfirmationStatus(Request $request){
         $order = Order::find($request->id);
-        $order->order_status = 4;
+        if($request->status_id == 2131558546){
+            $order->order_status = 4;    
+        } else if ($request->status_id == 2131558547){
+            $order->order_status = 6;
+        } else if ($request->status_id == 2131558547){
+            $order->order_status = 6;
+        }
         $order->save();
 
         return 'Pesanan selesai';
