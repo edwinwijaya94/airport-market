@@ -17,13 +17,19 @@ class UserController extends Controller
         $user = User::where('username', strtolower($request->username))->first();
 
         if($user != NULL) { //user exsist
-
             if ($request->password == $user->password) { //password true
-                return Response::json(array(
-                    'error'=>false,
-                    'user_id'=>$user->id),
-                    200
-                );    
+                if ($user->fake < 3) { //not fake account
+                    return Response::json(array(
+                        'error'=>false,
+                        'user_id'=>$user->id),
+                        200
+                    );        
+                } else {
+                    return Response::json(array(
+                        'error'=>true,
+                        'message'=>"Akun Anda sudah diblok")
+                    );
+                }
             } else { //password false
                 return Response::json(array(
                     'error'=>true,
