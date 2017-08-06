@@ -143,10 +143,12 @@ class OrderController extends Controller {
 
     public function updatePriorityStatus(Request $request){
         $order = Order::find($request->id);
+        $user = User::find($order->customer_id);
+        $phone = $user->phone_number;
         $order->order_status = 5;
         $order->save();
 
-        return 'Status berhasil diupdate';
+        return redirect()->action('SMSController@addConverter', ['phone' => $phone, 'text' => "Barang prioritas tidak tersedia" ]);;
     }
 
     public function getLastOrderID(Request $request) {
