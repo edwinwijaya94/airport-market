@@ -103,5 +103,15 @@ Route::get('/virtualmarket/getAllRates', 'PaymentController@getAllRates');
 Route::post('/virtualmarket/updateRates', 'PaymentController@updateRates');
 
 //Route for SMS
-// Route::get('/sms/send', 'SMSController@sendMessage');
+Route::get('virtualmarket/sms/all', 'SMSController@getAllSMS');
+Route::get('virtualmarket/sms/send/{text}/{phone}', 'SMSController@sendMessage');
 Route::post('virtualmarket/sms/receive', 'SMSController@receiveMessage');
+
+//Route for Dictionary
+Route::get('virtualmarket/dictionary', 'DictionaryController@getAllDictionary');
+Route::post('virtualmarket/dictionary/add', 'DictionaryController@addDictionary');
+
+//Route for Undefine Word
+Route::get('virtualmarket/undefine/word', 'UndefineWordController@getAllUndefineWord');
+Route::get('virtualmarket/undefine/word/delete/{id}', 'UndefineWordController@deleteUndefineWord');
+
