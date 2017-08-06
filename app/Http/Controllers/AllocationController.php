@@ -26,9 +26,9 @@ class AllocationController extends Controller {
                 $allocatedGarendong = Garendong::find($garendong[0]->id);
                 $allocatedGarendong->number_of_allocation++;
                 $allocatedGarendong->save();
+                $order->order_status = 2;   
+                $order->save();
             }
-			$order->order_status = 2;	
-			$order->save();
 		}
 
 		return 'Garendong berhasil dialokasikan';
