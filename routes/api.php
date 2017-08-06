@@ -114,7 +114,7 @@ Route::post('/virtualmarket/updateRates', 'PaymentController@updateRates');
 
 //Route for SMS
 Route::get('virtualmarket/sms/all', 'SMSController@getAllSMS');
-Route::get('/sms/send/{text}/{phone}', 'SMSController@sendMessage');
+Route::get('virtualmarket/sms/send/{text}/{phone}', 'SMSController@sendMessage');
 Route::post('virtualmarket/sms/receive', 'SMSController@receiveMessage');
 
 //Route for Dictionary

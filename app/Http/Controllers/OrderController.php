@@ -154,7 +154,7 @@ class OrderController extends Controller {
         $order->order_status = 5;
         $order->save();
 
-        return redirect()->action('SMSController@addConverter', ['phone' => $phone, 'text' => "Barang prioritas tidak tersedia" ]);;
+        return redirect()->action('SMSController@sendMessage', ['text' => "Barang prioritas tidak tersedia", 'phone' => $phone ]);;
     }
 
     public function getLastOrderID(Request $request) {
