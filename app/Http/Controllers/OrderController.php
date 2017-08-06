@@ -72,15 +72,19 @@ class OrderController extends Controller {
     public function updateConfirmationStatus(Request $request){
         $order = Order::find($request->id);
         if($request->status_id == 2131558546){
-            $order->order_status = 4;    
+            $order->order_status = 4;
+            $order->save();
+            return 'Pesanan selesai';
         } else if ($request->status_id == 2131558547){
             $order->order_status = 6;
+            $order->save();
+            return 'Pesanan selesai';
         } else if ($request->status_id == 2131558547){
             $order->order_status = 6;
+            $order->save();
+            return 'Pesanan selesai';
         }
-        $order->save();
-
-        return 'Pesanan selesai';
+        
         // return redirect(); buat SMS
     }
 
