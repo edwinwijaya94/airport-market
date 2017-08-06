@@ -19,10 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //Route for Users
 Route::get('/virtualmarket/user/all', 'UserController@getAllUser');
-Route::get('/virtualmarket/user/role', 'UserController@getBuyerRoleID');
 Route::post('/virtualmarket/user', 'UserController@getUserByID');
 Route::post('/virtualmarket/user/register', 'UserController@addUser');
-Route::post('/virtualmarket/user/login', 'UserController@userLogin');
+Route::post('/virtualmarket/user/login', 'UserController@login');
 Route::post('/virtualmarket/user/edit', 'UserController@updateUser');
 Route::post('/virtualmarket/garendong/register', 'UserController@addGarendong');
 Route::post('/virtualmarket/garendong/login', 'UserController@garendongLogin');
@@ -35,7 +34,6 @@ Route::post('/virtualmarket/categories/delete/{id}', 'CategoryController@deleteC
 
 //Route for Unit
 Route::get('/virtualmarket/units', 'UnitController@getAllUnit');
-Route::get('/virtualmarket/units/common', 'UnitController@getCommonUnit');
 Route::get('/virtualmarket/units/{id}', 'UnitController@getUnit');
 Route::post('/virtualmarket/units/add', 'UnitController@addUnit');
 Route::post('/virtualmarket/units/edit/{id}', 'UnitController@updateUnit');
@@ -60,37 +58,29 @@ Route::post('/virtualmarket/product/delete/{id}', 'ProductController@deleteProdu
 //Route for Order
 Route::get('/virtualmarket/order', 'OrderController@getAllOrder');
 Route::get('/virtualmarket/order/getData/{id}', 'OrderController@getOrderById');
-Route::post('/virtualmarket/order/id', 'OrderController@getLastOrderID');
 Route::post('/virtualmarket/order/add', 'OrderController@addOrder');
 Route::post('/virtualmarket/order/updateDeliveryStatus', 'OrderController@updateDeliveryStatus');
 Route::post('/virtualmarket/order/updateConfirmationStatus', 'OrderController@updateConfirmationStatus');
 Route::get('/virtualmarket/garendong', 'OrderController@getAllGarendong');
 Route::post('/virtualmarket/order/updatePriorityStatus', 'OrderController@updatePriorityStatus');
 
+
 //Route for Order Line
 Route::get('/virtualmarket/orderline', 'OrderLineController@getAllOrderLine');
 Route::get('/virtualmarket/orderline/{id}', 'OrderLineController@getOrderLinebyId');
-Route::post('/virtualmarket/orderline/add', 'OrderLineController@addOrderLine');
+Route::post('/virtualmarket/order/add/{id}', 'OrderLineController@addOrderLine');
 Route::post('/virtualmarket/orderline/updatePrice', 'OrderLineController@updateProductPrice');
 Route::post('/virtualmarket/orderline/updateStatus', 'OrderLineController@updateStatus');
 
-//Route for Shopping List
-Route::post('/virtualmarket/cart', 'CartController@getCartByUserID');
-Route::post('/virtualmarket/cart/add', 'CartController@addCart');
-Route::post('/virtualmarket/cart/edit', 'CartController@editCartByID');
-Route::post('/virtualmarket/cart/edit/priority', 'CartController@editPriorityByID');
-Route::post('/virtualmarket/cart/delete', 'CartController@deleteCartByID');
-Route::post('/virtualmarket/cart/remove', 'CartController@deleteCartByUserID');
-
 //Route for Order Status
-Route::get('/virtualmarket/status', 'OrderStatusController@getAllSuccessStatus');
+Route::get('/virtualmarket/status', 'OrderStatusController@getAllStatus');
 Route::get('/virtualmarket/order/{id}', 'OrderController@getStateStatus');
 
 //Route for Reason
 Route::get('/virtualmarket/reasons', 'ReasonController@getAllReasons');
 
 //Route for Feedback
-Route::get('/virtualmarket/feedback/history/{id}', 'OrderController@getOrderHistory');
+Route::get('/virtualmarket/feedback/history', 'OrderController@getOrderHistory');
 Route::post('/virtualmarket/rating/add', 'OrderController@addRating');
 Route::post('/virtualmarket/feedback/add', 'UserFeedbackController@addFeedback');
 Route::get('/virtualmarket/feedback', 'UserFeedbackController@getAllFeedback');
@@ -124,3 +114,4 @@ Route::post('virtualmarket/dictionary/add', 'DictionaryController@addDictionary'
 //Route for Undefine Word
 Route::get('virtualmarket/undefine/word', 'UndefineWordController@getAllUndefineWord');
 Route::get('virtualmarket/undefine/word/delete/{id}', 'UndefineWordController@deleteUndefineWord');
+
