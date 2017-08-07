@@ -102,7 +102,7 @@ class UserController extends Controller
                     ->first();
         $address_obj->user_id = $user->id;
         $address_obj->latitude = $data['results'][0]['geometry']['location']['lat'];
-        $address_obj->longitude = $data['results'][0]['geometry']['location']['lng']);
+        $address_obj->longitude = $data['results'][0]['geometry']['location']['lng'];
         $address_obj->save;
 
         return "Selamat Anda sudah terdaftar di Fresh Market";
@@ -114,7 +114,7 @@ class UserController extends Controller
             ->update(array(
                         'name' => strtolower($request->name),
                         'address' => $request->address,
-                        'address_note' => $request->addressNote,
+                        'address_note' => $request->address_note,
                         'phone_number' => $request->phone)
                     );
 
