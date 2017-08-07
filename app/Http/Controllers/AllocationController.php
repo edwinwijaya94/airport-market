@@ -129,21 +129,11 @@ class AllocationController extends Controller {
 
         foreach ($orders as $order) {
             $user = User::find($order->customer_id);
-            $address .= urlencode($user->address);
-            $url .= $address . $key;
-            $response = $client->get($url);
+            $address = Address::where('user_id', '=', $user->id)->first();
 
-            $body = $response->getBody();
-
-            $data = json_decode($body, true);
-
-            array_push($arrayLocation, $data['results'][0]['geometry']['location']['lat'], 
-                            $data['results'][0]['geometry']['location']['lng']);
-           
-            $address = "address=";
-            $url = "https://maps.googleapis.com/maps/api/geocode/json?";
-            usleep(200000);
+            array_push($arrayLocation, $address->latitude, $address->latitude);
         }
+        
         $counter = 0;
         while ($counter < $numOrders*2) {
             array_push($matrixLocation, array($arrayLocation[$counter], $arrayLocation[$counter+1]));

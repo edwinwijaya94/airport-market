@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Role;
 use App\Garendong;
+use App\Address;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use GuzzleHttp\Client;
 use Response;
 
 class UserController extends Controller
@@ -81,6 +83,27 @@ class UserController extends Controller
         $user->phone_number = $request->phone;
         $user->password = $request->password;
         $user->save();
+
+        $address_obj = new Address();
+        $client = new Client();
+        $key = "&key=AIzaSyAT65_OGp-KOIb8aTd9uc3Whh3IbYrVEAY";
+        $address = "address=";
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?";    
+
+        $address .= urlencode($request->address);
+        $url .= $address . $key;
+        $response = $client->get($url);
+
+        $body = $response->getBody();
+
+        $data = json_decode($body, true);
+
+        $user = User::where('username', '=', strtolower($request->username))
+                    ->first();
+        $address_obj->user_id = $user->id;
+        $address_obj->latitude = $data['results'][0]['geometry']['location']['lat'];
+        $address_obj->longitude = $data['results'][0]['geometry']['location']['lng']);
+        $address_obj->save;
 
         return "Selamat Anda sudah terdaftar di Fresh Market";
     }
