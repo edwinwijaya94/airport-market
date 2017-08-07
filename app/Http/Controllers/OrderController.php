@@ -62,10 +62,15 @@ class OrderController extends Controller {
 
     public function updateDeliveryStatus(Request $request){
         $order = Order::find($request->id);
+        $user = User::find($order->customer_id);
+        $phone = $user->phone_number;
         $order->order_status = 3;
         $order->save();
-
-        return 'Pesanan sedang dikirim';
+        if ($order->order_type != "mobile"){
+            return redirect()->action('SMSController@sendMessage', ['text' => "[PAYAKUMBUH]\nStatus pesanan Anda:\nSedang dalam pengiriman", 'phone' => $phone ]);
+        } else {
+            return 'Pesanan sedang dikirim';    
+        }
         // return redirect(); buat SMS
     }
 
@@ -80,11 +85,11 @@ class OrderController extends Controller {
         } else if ($request->status_id == 2131558547){
             $order->order_status = 6;
             $order->save();
-            return redirect()->action('SMSController@sendMessage', ['text' => "[PAYAKUMBUH]\nStatus pesanan Anda:\nPengiriman gagal", 'phone' => $phone ]);;
+            return redirect()->action('SMSController@sendMessage', ['text' => "[PAYAKUMBUH]\nStatus pesanan Anda:\nPengiriman gagal", 'phone' => $phone ]);
         } else if ($request->status_id == 2131558547){
             $order->order_status = 6;
             $order->save();
-            return redirect()->action('SMSController@sendMessage', ['text' => "[PAYAKUMBUH]\nStatus pesanan Anda:\nPengiriman gagal", 'phone' => $phone ]);;
+            return redirect()->action('SMSController@sendMessage', ['text' => "[PAYAKUMBUH]\nStatus pesanan Anda:\nPengiriman gagal", 'phone' => $phone ]);
         }
         
         // return redirect(); buat SMS
