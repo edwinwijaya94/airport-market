@@ -34,6 +34,7 @@ Route::post('/virtualmarket/categories/delete/{id}', 'CategoryController@deleteC
 
 //Route for Unit
 Route::get('/virtualmarket/units', 'UnitController@getAllUnit');
+Route::get('/virtualmarket/units/common', 'UnitController@getCommonUnit');
 Route::get('/virtualmarket/units/{id}', 'UnitController@getUnit');
 Route::post('/virtualmarket/units/add', 'UnitController@addUnit');
 Route::post('/virtualmarket/units/edit/{id}', 'UnitController@updateUnit');
@@ -57,23 +58,32 @@ Route::post('/virtualmarket/product/delete/{id}', 'ProductController@deleteProdu
 
 //Route for Order
 Route::get('/virtualmarket/order', 'OrderController@getAllOrder');
+Route::post('/virtualmarket/order/id', 'OrderController@getLastOrderID');
 Route::get('/virtualmarket/order/getData/{id}', 'OrderController@getOrderById');
 Route::post('/virtualmarket/order/add', 'OrderController@addOrder');
 Route::post('/virtualmarket/order/updateDeliveryStatus', 'OrderController@updateDeliveryStatus');
 Route::post('/virtualmarket/order/updateConfirmationStatus', 'OrderController@updateConfirmationStatus');
 Route::get('/virtualmarket/garendong', 'OrderController@getAllGarendong');
-Route::post('/virtualmarket/order/updatePriorityStatus', 'OrderController@updatePriorityStatus');
-
-
+Route::post('/virtualmarket/order/updatePriorityStatus', 'OrderController@updatePriorityStatus');    
+ 
 //Route for Order Line
 Route::get('/virtualmarket/orderline', 'OrderLineController@getAllOrderLine');
 Route::get('/virtualmarket/orderline/{id}', 'OrderLineController@getOrderLinebyId');
 Route::post('/virtualmarket/order/add/{id}', 'OrderLineController@addOrderLine');
 Route::post('/virtualmarket/orderline/updatePrice', 'OrderLineController@updateProductPrice');
 Route::post('/virtualmarket/orderline/updateStatus', 'OrderLineController@updateStatus');
+Route::post('/virtualmarket/orderline/add', 'OrderLineController@addOrderLine');
+
+//Route for Cart
+Route::post('/virtualmarket/cart', 'CartController@getCartByUserID');
+Route::post('/virtualmarket/cart/add', 'CartController@addCart');
+Route::post('/virtualmarket/cart/edit', 'CartController@editCartyByID');
+Route::post('/virtualmarket/cart/edit/priority', 'CartController@editPriorityByID');
+Route::post('/virtualmarket/cart/delete', 'CartController@deleteCartByID');
+Route::post('/virtualmarket/cart/remove', 'CartController@deleteCartByUserID');
 
 //Route for Order Status
-Route::get('/virtualmarket/status', 'OrderStatusController@getAllStatus');
+Route::get('/virtualmarket/status', 'OrderStatusController@getAllSuccessStatus');
 Route::get('/virtualmarket/order/{id}', 'OrderController@getStateStatus');
 
 //Route for Reason
