@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGarendongsTable extends Migration
+class CreateShoppersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateGarendongsTable extends Migration
      */
     public function up()
     {
-        Schema::create('garendongs', function (Blueprint $table) {
+        Schema::create('shoppers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('number_of_allocation')->default(0);
@@ -28,6 +28,6 @@ class CreateGarendongsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('garendongs');
+        Schema::dropIfExists('shoppers');
     }
 }

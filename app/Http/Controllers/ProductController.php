@@ -13,16 +13,11 @@ use File;
 
 class ProductController extends Controller {
 
-    public function productAdd() {
-        return view('product');
-    }
-
-    public function getAllProductByCategory(Request $request, $id) {
-    	//retrieve all products based on cateory
-    	$products = Category::find($id)->products;
+    public function getAllProductByStore(Request $request, $id) {
+    	//retrieve all products based on store
+    	$products = Store::find($id)->products;
 
         foreach($products as $product) {
-            $product->default_unit_id = $product->unit->unit;
             $product->name = ucwords($product->name);
         }
 
@@ -49,7 +44,6 @@ class ProductController extends Controller {
     public function getProduct(Request $request, $id) {
         //retrieve product based on id from database
     	$detail = Product::find($id);
-        $detail->default_unit_id = $detail->unit->unit;
         $detail->name = ucwords($detail->name);
 
     	return Response::json(array(
@@ -59,11 +53,12 @@ class ProductController extends Controller {
     	);
     }
 
-    public function getSearchProduct(Request $request, $keyword) {
+    public function getSearchProductByStore(Request $request, $keyword) {
         //retrieve product based on key word from user
-        $results = Product::where('name', 'ILIKE', '%'.$keyword.'%')->get();
+        $results = Product::where('name', 'ILIKE', '%'.$keyword.'%')
+                    ->where('store_id','=',$request->store_id)
+                    ->get();
         foreach($results as $result)
-            $result->default_unit_id = $result->unit->unit;
             $result->name = ucwords($result->name);
 
         return Response::json(array(
@@ -91,29 +86,7 @@ class ProductController extends Controller {
     }
 
     public function addProduct(Request $request) {
-        //set default value
-        $default_quantity = 100;
-        // convert price to 100/gram
-        $quantity = $request->product_quantity;
-        $unit_id = $request->unit_id;
-        $unit = Unit::find($unit_id);
-        $converterObject = Converter::find($unit_id);
-        // set default quantity based on unit type
-        if ($unit->unit_type == 'common') {
-            //search id for unit gram
-            $unit_gram = DB::table('units')
-                     ->where('unit', 'gram')
-                     ->first();
-            $default_unit = $unit_gram->id;
-            $converter = $converterObject->in_gram;
-            $quantity_in_gram = $quantity * $converter;
-            $price = ($default_quantity/$quantity_in_gram) * $request->product_price;
-        } else if ($unit->unit_type == 'uncommon')  {
-            $default_quantity = 1;
-            $default_unit = $unit_id;
-            $price = ($default_quantity/$quantity) * $request->product_price;
-        }
-        $price = round($price);
+        $price = round($request->price);
 
         //add image to folder images
         $fileImage = $request->product_image;
@@ -123,12 +96,8 @@ class ProductController extends Controller {
         //add product to database
     	$product = new Product();
     	$product->name = strtolower($request->product_name);
-    	$product->default_quantity = $default_quantity;
-        $product->default_unit_id = $default_unit;
-    	$product->price_min = $price;
-        $product->price_max = $price;    	
     	$product->product_img = $imageName;
-    	$product->category_id = $request->category_id;
+    	$product->store_id = $request->store_id;
         $product->save();
 
         return Response::json(array(
@@ -139,28 +108,8 @@ class ProductController extends Controller {
     }
 
     public function updateProduct(Request $request, $id) {
-        //set default value
-        $default_quantity = 100;
-        // convert price to 100/gram
-        $quantity = $request->product_quantity;
-        $unit_id = $request->unit_id;
-        $unit = Unit::find($unit_id);
-        $converterObject = Converter::find($unit_id);
-        if ($unit->unit_type == 'common') {
-            //search id for unit gram
-            $unit_gram = DB::table('units')
-                     ->where('unit', 'gram')
-                     ->first();
-            $default_unit = $unit_gram->id;
-            $converter = $converterObject->in_gram;
-            $quantity_in_gram = $quantity * $converter;
-            $price = ($default_quantity/$quantity_in_gram) * $request->product_price;
-        } else if ($unit->unit_type == 'uncommon')  {
-            $default_quantity = 1;
-            $default_unit = $unit_id;
-            $price = ($default_quantity/$quantity) * $request->product_price;
-        }
-        $price = round($price); //round price
+        
+        $price = round($request->price); //round price
         // image section
         $product = Product::find($id);
         $oldImage = $product->product_img;
@@ -179,16 +128,8 @@ class ProductController extends Controller {
         }
         //add product to database
         $product->name = strtolower($request->product_name);
-        $product->default_quantity = $default_quantity;
-        $product->default_unit_id = $default_unit;
-        //compare price update with price in table for price min and price max
-        if ($price < $product->price_min) {
-            $product->price_min = $price;
-        } else if ($price > $product->price_max) {
-            $product->price_max = $price;
-        }
         $product->product_img = $imageName;
-        $product->category_id = $request->category_id;
+        $product->store_id = $request->store_id;
         $product->save();
 
         return Response::json(array(

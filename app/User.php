@@ -26,7 +26,6 @@ class User extends Model
     // protected $hidden = [
     //     'password', 'remember_token',
     // ];
-
-    protected $connection = 'pgsql_2';
+    
     protected $table = 'users';
 }

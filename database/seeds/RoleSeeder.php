@@ -11,7 +11,7 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        DB::connection('pgsql_2')->table('roles')->insert([
+        DB::connection('pgsql')->table('roles')->insert([
             ['name' => 'pembeli'],
             ['name' => 'garendong'],
             ['name' => 'staf_pasar'],

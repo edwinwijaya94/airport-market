@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Role;
-use App\Garendong;
+use App\Shopper;
 use App\Address;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -78,34 +78,33 @@ class UserController extends Controller
         $user->name = strtolower($request->name);
         $user->username = strtolower($request->username);
         $user->email = $request->email;
-        $user->address = $request->address;
-        $user->address_note = strtolower($request->address_note);
         $user->phone_number = $request->phone;
         $user->password = $request->password;
         $user->save();
 
-        $address_obj = new Address();
-        $client = new Client();
-        $key = "&key=AIzaSyAT65_OGp-KOIb8aTd9uc3Whh3IbYrVEAY";
-        $address = "address=";
-        $url = "https://maps.googleapis.com/maps/api/geocode/json?";    
+        // $address_obj = new Address();
+        // $client = new Client();
+        // $key = "&key=AIzaSyAT65_OGp-KOIb8aTd9uc3Whh3IbYrVEAY";
+        // $address = "address=";
+        // $url = "https://maps.googleapis.com/maps/api/geocode/json?";    
 
-        $address .= urlencode($request->address);
-        $url .= $address . $key;
-        $response = $client->get($url);
+        // $address .= urlencode($request->address);
+        // $url .= $address . $key;
+        // $response = $client->get($url);
 
-        $body = $response->getBody();
+        // $body = $response->getBody();
 
-        $data = json_decode($body, true);
+        // $data = json_decode($body, true);
 
         $user = User::where('username', '=', strtolower($request->username))
                     ->first();
-        $address_obj->user_id = $user->id;
-        $address_obj->latitude = $data['results'][0]['geometry']['location']['lat'];
-        $address_obj->longitude = $data['results'][0]['geometry']['location']['lng'];
-        $address_obj->save;
+                    
+        // $address_obj->user_id = $user->id;
+        // $address_obj->latitude = $data['results'][0]['geometry']['location']['lat'];
+        // $address_obj->longitude = $data['results'][0]['geometry']['location']['lng'];
+        // $address_obj->save;
 
-        return "Selamat Anda sudah terdaftar di Fresh Market";
+        return "Selamat Anda sudah terdaftar di Airport Market";
     }
 
     public function updateUser(Request $request) {
@@ -113,15 +112,13 @@ class UserController extends Controller
         User::where('id', $request->id)
             ->update(array(
                         'name' => strtolower($request->name),
-                        'address' => $request->address,
-                        'address_note' => $request->address_note,
                         'phone_number' => $request->phone)
                     );
 
         return "Profile Anda berhasil diubah";
     }
 
-    public function addGarendong(Request $request) {
+    public function addShopper(Request $request) {
         //add order to database
         $user = new User();
         $user->name = strtolower($request->name);
@@ -135,26 +132,24 @@ class UserController extends Controller
         $user = User::where('username', '=', strtolower($request->username))
                     ->first();
         var_dump($user->id);
-        $garendong = new Garendong();
-        $garendong->user_id = $user->id;
-        $garendong->rating = 0;
-        $garendong->num_rating = 0;
-        $garendong->save();
+        $shopper = new Shopper();
+        $shopper->user_id = $user->id;
+        $shopper->save();
 
-        return "Selamat Anda sudah terdaftar di Fresh Market";
+        return "Selamat Anda sudah terdaftar di Airport Market";
     }
 
-    public function garendongLogin(Request $request){
+    public function shopperLogin(Request $request){
         $user = User::where([
                 ['username', '=', strtolower($request->username)],
                 ['password', '=', $request->password]
             ])->first();
         if($user != NULL) { // if user exsist
-            $garendong = Garendong::where('user_id', '=', $user->id)
+            $shopper = Shopper::where('user_id', '=', $user->id)
                             ->first();
             return Response::json(array(
                 'error'=>false,
-                'garendong_id'=>$garendong->id),
+                'shopper_id'=>$shopper->id),
                 200
             );
         } else {

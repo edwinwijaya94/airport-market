@@ -13,7 +13,7 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
-        Schema::connection('pgsql_2')->create('roles', function (Blueprint $table) {
+        Schema::connection('pgsql')->create('roles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
             $table->timestamps();
@@ -28,6 +28,6 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        Schema::connection('pgsql_2')->dropIfExists('roles');
+        Schema::connection('pgsql')->dropIfExists('roles');
     }
 }

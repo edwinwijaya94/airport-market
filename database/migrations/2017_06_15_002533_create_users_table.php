@@ -34,6 +34,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::connection('pgsql_2')->dropIfExists('users');
+        Schema::connection('pgsql')->dropIfExists('users');
     }
 }
