@@ -18,10 +18,7 @@ class CreateCartsTable extends Migration
             $table->integer('user_id');
             $table->integer('product_id');
             $table->integer('quantity');
-            $table->integer('unit_id');
-            $table->integer('price_min');
-            $table->integer('price_max');
-            $table->boolean('is_priority');
+            $table->integer('price');
             $table->timestamps();
         });
     }

@@ -17,10 +17,6 @@ class CreateGarendongsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('number_of_allocation')->default(0);
-            $table->integer('status')->default(1);
-            $table->integer('rating');
-            $table->integer('num_rating');
-            $table->integer('tarif')->default(0);
             $table->timestamps();
         });
     }

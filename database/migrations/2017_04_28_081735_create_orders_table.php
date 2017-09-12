@@ -17,12 +17,11 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->integer('customer_id');
             $table->integer('total_product');
-            $table->string('order_type');
             $table->integer('total_price')->default(0);
-            $table->integer('garendong_id')->default(0);
+            $table->integer('shopper_id')->default(0);
             $table->integer('order_status')->default(1);
-            $table->integer('rating')->nullable();
             $table->integer('rates')->default(0);
+            $table->string('buyer_location');
             $table->timestamps();
         });
     }

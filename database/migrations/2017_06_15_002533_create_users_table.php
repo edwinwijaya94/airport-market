@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::connection('pgsql_2')->create('users', function (Blueprint $table) {
+        Schema::connection('pgsql')->create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('role_id')->unsigned();
             $table->string('name');
@@ -21,8 +21,6 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('username')->unique();
             $table->string('phone_number')->unique();
-            $table->text('address');
-            $table->text('address_note')->nullable();
             $table->integer('fake')->nullable();
             $table->rememberToken();
             $table->timestamps();

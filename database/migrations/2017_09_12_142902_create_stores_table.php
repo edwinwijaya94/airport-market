@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUndefineDictionariesTable extends Migration
+class CreateStoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateUndefineDictionariesTable extends Migration
      */
     public function up()
     {
-        Schema::create('undefine_words', function (Blueprint $table) {
+        Schema::create('stores', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('undefine_word', 30);
-            $table->string('word', 30)->default("");
+            $table->integer('category_id');
+            $table->string('name');
+            $table->string('location');
+            $table->string('phone_number');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateUndefineDictionariesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('undefine_words');
+        Schema::dropIfExists('stores');
     }
 }
