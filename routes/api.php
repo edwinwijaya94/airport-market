@@ -32,9 +32,12 @@ Route::post('/categories/add', 'CategoryController@addCategory');
 Route::post('/categories/edit/{id}', 'CategoryController@updateCategory');
 Route::post('/categories/delete/{id}', 'CategoryController@deleteCategory');
 
+
+//Route for Stores
+Route::get('/stores', 'StoreController@getStores');
+
 //Route for Products
-Route::get('/categories/{id}', 'ProductController@getAllProductByCategory');
-Route::get('/product', 'ProductController@getAllProduct');
+Route::get('/products', 'ProductController@getProductsByStore');
 Route::get('/product/{id}', 'ProductController@getProduct');
 Route::get('/product/search/{keyword}', 'ProductController@getSearchProduct');
 Route::post('/product/add', 'ProductController@addProduct');

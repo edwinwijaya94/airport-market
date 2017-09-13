@@ -15,10 +15,8 @@ class CreateStoresTable extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('category_id');
+            $table->string('airport_code');
             $table->string('name');
-            $table->string('location');
-            $table->string('phone_number');
             $table->timestamps();
         });
     }

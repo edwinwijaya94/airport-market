@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Category;
-use App\Unit;
-use App\Converter;
+use App\Store;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Response;
@@ -13,9 +12,12 @@ use File;
 
 class ProductController extends Controller {
 
-    public function getAllProductByStore(Request $request, $id) {
+    public function getProductsByStore(Request $request) {
     	//retrieve all products based on store
-    	$products = Store::find($id)->products;
+    	$products = Store::where('airport_code', '=', $request->airport_code)
+                    ->where('name', '=', $request->store_name)
+                    ->with('products')
+                    ->get();
 
         foreach($products as $product) {
             $product->name = ucwords($product->name);
