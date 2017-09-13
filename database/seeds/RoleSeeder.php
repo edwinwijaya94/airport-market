@@ -13,9 +13,9 @@ class RoleSeeder extends Seeder
     {
         DB::connection('pgsql')->table('roles')->insert([
             ['name' => 'pembeli'],
-            ['name' => 'garendong'],
-            ['name' => 'staf_pasar'],
-            ['name' => 'staf_disperindag'],
+            ['name' => 'shopper'],
+            // ['name' => 'staf_pasar'],
+            // ['name' => 'staf_disperindag'],
         ]);
     }
 }
