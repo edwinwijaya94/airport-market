@@ -57,7 +57,6 @@ Route::post('/order/updatePriorityStatus', 'OrderController@updatePriorityStatus
 //Route for Order Line
 Route::get('/orderline', 'OrderLineController@getAllOrderLine');
 Route::get('/orderline/{id}', 'OrderLineController@getOrderLinebyId');
-Route::post('/order/add/{id}', 'OrderLineController@addOrderLine');
 Route::post('/orderline/updatePrice', 'OrderLineController@updateProductPrice');
 Route::post('/orderline/updateStatus', 'OrderLineController@updateStatus');
 Route::post('/orderline/add', 'OrderLineController@addOrderLine');

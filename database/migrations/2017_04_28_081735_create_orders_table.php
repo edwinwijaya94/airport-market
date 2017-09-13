@@ -21,7 +21,7 @@ class CreateOrdersTable extends Migration
             $table->integer('shopper_id')->default(0);
             $table->integer('order_status')->default(1);
             $table->integer('rates')->default(0);
-            $table->string('buyer_location');
+            $table->string('customer_location');
             $table->timestamps();
         });
     }

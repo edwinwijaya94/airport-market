@@ -19,8 +19,6 @@ class OrderLineController extends Controller
             $orderLine->order_id = $request->order_id;
             $orderLine->product_id = $item['product_id'];
             $orderLine->quantity = $item['quantity'];
-            $orderLine->unit_id = $item['unit_id'];
-            $orderLine->is_priority = $item['is_priority'];
             $orderLine->save();
         }
         return "Pesanan Anda berhasil diproses";
@@ -44,10 +42,6 @@ class OrderLineController extends Controller
         foreach ($order_line as $item) {
             $item = $item->product;
             $item->name = ucwords($item->name);
-        }
-
-        foreach ($order_line as $item) {
-            $item = $item->unit;
         }
 
         return response()->json($order_line);

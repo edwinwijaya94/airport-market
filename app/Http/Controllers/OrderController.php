@@ -15,8 +15,8 @@ class OrderController extends Controller {
         //add order to database
     	$order = new Order();
         $order->customer_id = $request->customer_id;
-        $order->total_product = $request->total_product;        
-        $order->order_type = "mobile";
+        $order->total_product = $request->total_product;
+        $order->customer_location = $request->customer_location;
         $order->save();
         //get order id after insert the order to database
         $order_id = $order->id;
@@ -35,13 +35,13 @@ class OrderController extends Controller {
 
     public function getOrderById($id) {
         $order = Order::where([
-            ['garendong_id', '=', $id],
+            ['shopper_id', '=', $id],
             ['order_status', '<>', 4],
             ['order_status', '<>', 5],
             ['order_status', '<>', 6]
             ])->get();
 
-        $numberAllocation = Order::where('garendong_id', '=', $id)
+        $numberAllocation = Order::where('shopper_id', '=', $id)
                                 ->count();
         $garendong = Garendong::find($id);
         if ($garendong->number_of_allocation == 0){
@@ -98,7 +98,7 @@ class OrderController extends Controller {
     public function getStateStatus($id) {
         //get order, garendon name, and status from database
         $order = Order::find($id);
-        $garendong = User::select('name')->where('id', $order->garendong_id)->first();
+        $garendong = User::select('name')->where('id', $order->shopper_id)->first();
         $status = $order->status;
         // check garendong empty or not
         if (empty($garendong)) {
@@ -113,23 +113,6 @@ class OrderController extends Controller {
             'garendong'=>$garendong),
             200
         );
-    }
-
-    public function addRating(Request $request) {
-        //add rating to order table
-        $order_id = $request->order_id;
-        $order = Order::find($order_id);
-        $order->rating = $request->rating;
-        $order->save();
-
-        //add rating to garendong table
-        $garendong_id = $order->garendong_id;
-        $garendong = Garendong::find($garendong_id);
-        $garendong->rating = $garendong->rating + $request->rating;
-        $garendong->num_rating = $garendong->num_rating + 1;
-        $garendong->save();
-        
-        return "Terima kasih atas umpan balik Anda";
     }
 
     public function getOrderHistory($id) {
@@ -156,16 +139,6 @@ class OrderController extends Controller {
             'garendong'=>$garendong->toArray()),
             200
         );
-    }
-
-    public function updatePriorityStatus(Request $request){
-        $order = Order::find($request->id);
-        $user = User::find($order->customer_id);
-        $phone = $user->phone_number;
-        $order->order_status = 5;
-        $order->save();
-
-        return redirect()->action('SMSController@sendMessage', ['text' => "[PAYAKUMBUH]\nStatus pesanan Anda:\nBarang prioritas tidak tersedia", 'phone' => $phone ]);;
     }
 
     public function getLastOrderID(Request $request) {
