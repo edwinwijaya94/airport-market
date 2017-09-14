@@ -46,10 +46,10 @@ class OrderController extends Controller {
         
         $departureTime = Carbon::createFromFormat('Y-m-d H:i:s', $bpData['flightDate'].' '.$departureTime);
         $currentTime = Carbon::now('Asia/Jakarta'); // require airport tz, currently set to WIB !
-        var_dump($departureTime->toDateTimeString());
-        var_dump($currentTime->toDateTimeString());
+        // var_dump($departureTime->toDateTimeString());
+        // var_dump($currentTime->toDateTimeString());
         $duration = $currentTime->diffInMinutes($departureTime, false);
-        var_dump($duration);
+        // var_dump($duration);
         if($duration > Helper::$minDuration) {
             $isValid['departureTime'] = array(); 
             $isValid['departureTime']['status'] = true;
