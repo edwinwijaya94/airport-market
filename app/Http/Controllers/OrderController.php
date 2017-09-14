@@ -8,8 +8,62 @@ use App\Garendong;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Response;
+use App\Http\Helper;
+use Carbon\Carbon;
 
 class OrderController extends Controller {
+
+    // authorize new order using boarding pass data
+    public function authorizeOrder(Request $request) {
+        $name = strtolower($request->name);
+        $boardingPassData = $request->boarding_pass_data;
+        $url = 'https://www.flighthistorian.com/boarding-pass/json/'.rawurlencode($boardingPassData);
+        $res = json_decode(Helper::curl('GET', $url, ''), true);
+        
+        // get required boarding pass info
+        $bpData = array();
+        $bpData['passengerName'] = $res['unique']['mandatory']['11']['raw'];
+        $bpData['flightNumber'] = Helper::formatFlightNumber($res['repeated'][0]['mandatory']['42']['raw'], $res['repeated'][0]['mandatory']['43']['raw']);
+        $bpData['departureAirport'] = $res['repeated'][0]['mandatory']['26']['raw'];
+        $bpData['flightDate'] = Carbon::parse('first day of January '.date('Y'))->addDays((int)$res['repeated'][0]['mandatory']['46']['raw'] - 1)->toDateString();
+        // dd($bpData['flightDate']);
+        $isValid = array();
+        //check if name is matched with boarding pass
+        if(Helper::formatName($bpData['passengerName']) == $name ) {
+            $isValid['name'] = array(); 
+            $isValid['name']['status'] = true;
+            $isValid['name']['message'] = 'Nama sesuai boarding pass';
+        } else {
+            $isValid['name'] = array(); 
+            $isValid['name']['status'] = false;
+            $isValid['name']['message'] = 'Nama tidak sesuai boarding pass';
+        }
+        
+        //check if departure time fulfill min. duration
+        $formEncoded = Helper::getFormEncoded($bpData['departureAirport'], 'FLG', '');
+        $flightData = json_decode(Helper::curl('POST', 'https://developer.angkasapura2.co.id/va/Api/getApidata', $formEncoded), true);
+        $departureTime = Helper::getDepartureTime($flightData, $bpData['flightNumber']);
+        
+        $departureTime = Carbon::createFromFormat('Y-m-d H:i:s', $bpData['flightDate'].' '.$departureTime);
+        $currentTime = Carbon::now('Asia/Jakarta'); // require airport tz, currently set to WIB !
+        var_dump($departureTime->toDateTimeString());
+        var_dump($currentTime->toDateTimeString());
+        $duration = $currentTime->diffInMinutes($departureTime, false);
+        var_dump($duration);
+        if($duration > Helper::$minDuration) {
+            $isValid['departureTime'] = array(); 
+            $isValid['departureTime']['status'] = true;
+            $isValid['departureTime']['message'] = 'Durasi waktu tunggu memungkinkan';
+        } else {
+            $isValid['departureTime'] = array(); 
+            $isValid['departureTime']['status'] = false;
+            $isValid['departureTime']['message'] = 'Durasi waktu tunggu tidak memungkinkan';
+        }
+
+        return response()->json([
+                'data' => $isValid
+            ]);
+    }
 
     public function addOrder(Request $request) {
         //add order to database

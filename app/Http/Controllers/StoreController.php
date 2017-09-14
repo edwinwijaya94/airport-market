@@ -19,7 +19,7 @@ class StoreController extends Controller {
 
     public function getStores(Request $request) {
         
-        $formEncoded = Helper::getFormEncoded($request->branch, $request->data_type);
+        $formEncoded = Helper::getFormEncoded($request->branch, 'FAC', $request->data_type);
         $result = Helper::curl('POST', 'https://developer.angkasapura2.co.id/va/Api/getApidata', $formEncoded);
 
         return response($result)
