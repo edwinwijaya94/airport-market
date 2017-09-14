@@ -17,8 +17,12 @@ class Order extends Model
     	return $this->hasOne('App\User');
     }
 
+    public function store() {
+        return $this->belongsTo('App\Store');
+    }
+
     public function shopper() {
-    	return $this->hasOne('App\Garendong');
+    	return $this->hasOne('App\Shopper');
     }
 
     public function orderline() {

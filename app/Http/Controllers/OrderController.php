@@ -69,6 +69,7 @@ class OrderController extends Controller {
         //add order to database
     	$order = new Order();
         $order->customer_id = $request->customer_id;
+        $order->store_id = $request->store_id;
         $order->total_product = $request->total_product;
         $order->customer_location = $request->customer_location;
         $order->save();
@@ -81,6 +82,19 @@ class OrderController extends Controller {
         //retrieve all orders from datbase
         $orders = Order::all();
         
+        return Response::json(array(
+            'orders'=>$orders->toArray()),
+            200
+        );
+    }
+
+    public function getOrdersByAirport($airportCode) {
+        $orders = Order::whereHas('store', function ($query) use($airportCode) {
+                            $query->where('airport_code', '=', $airportCode);
+                        })
+                        ->with('store')
+                        ->get();
+
         return Response::json(array(
             'orders'=>$orders->toArray()),
             200

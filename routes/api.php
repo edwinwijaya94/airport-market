@@ -46,7 +46,8 @@ Route::post('/product/delete/{id}', 'ProductController@deleteProduct');
 
 //Route for Order
 Route::post('/order/auth', 'OrderController@authorizeOrder');
-Route::get('/order', 'OrderController@getAllOrder');
+Route::get('/orders', 'OrderController@getAllOrder');
+Route::get('/orders/{airportCode}', 'OrderController@getOrdersByAirport');
 Route::post('/order/id', 'OrderController@getLastOrderID');
 Route::get('/order/getData/{id}', 'OrderController@getOrderById');
 Route::post('/order/add', 'OrderController@addOrder');
