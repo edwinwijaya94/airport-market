@@ -13,14 +13,8 @@ class OrdersTableSeeder extends Seeder
     {
         // insert some dummy records
         DB::connection('pgsql')->table('orders')->insert(array(
-        	array('customer_id'=>1,'total_product'=>5,'order_type'=>'mobile','garendong_id'=>1),
-        	array('customer_id'=>2,'total_product'=>4,'order_type'=>'mobile','garendong_id'=>1),
-        	array('customer_id'=>3,'total_product'=>2,'order_type'=>'sms','garendong_id'=>1),
-        	array('customer_id'=>4,'total_product'=>5,'order_type'=>'mobile','garendong_id'=>2),
-        	array('customer_id'=>5,'total_product'=>3,'order_type'=>'mobile','garendong_id'=>2),
-        	array('customer_id'=>1,'total_product'=>1,'order_type'=>'sms','garendong_id'=>3),
-        	array('customer_id'=>2,'total_product'=>1,'order_type'=>'sms','garendong_id'=>4),
-        	array('customer_id'=>3,'total_product'=>2,'order_type'=>'mobile','garendong_id'=>5),
+        	array('customer_id'=>1,'store_id'=>1,'total_product'=>2,'customer_location'=>'terminal domestik'),
+        	array('customer_id'=>2,'store_id'=>1,'total_product'=>2,'customer_location'=>'terminal internasional'),
         ));
     }
 }
