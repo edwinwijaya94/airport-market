@@ -48,6 +48,25 @@ class Helper {
         return $departureTime;
     }    
 
+    public static function removeHTMLTag($data) {
+        $res = $data;
+        for($i=0; $i<count($res); $i++) {
+            // dd($res[$i]);
+            $res[$i]['OBJECT_ADDRESS'] = preg_replace('#<[^>]+>#', ' ', $res[$i]['OBJECT_ADDRESS']);
+            $res[$i]['OBJECT_DESC'] = preg_replace('#<[^>]+>#', ' ', $res[$i]['OBJECT_DESC']);
+            $res[$i]['OBJECT_DESC_ENG'] = preg_replace('#<[^>]+>#', ' ', $res[$i]['OBJECT_DESC_ENG']);
+
+            $res[$i]['OBJECT_ADDRESS'] = str_replace(['&nbsp;', '&amp;', '&ndash;'], ' ', $res[$i]['OBJECT_ADDRESS']);
+            $res[$i]['OBJECT_DESC'] = str_replace(['&nbsp;', '&amp;', '&ndash;'], ' ', $res[$i]['OBJECT_DESC']);
+            $res[$i]['OBJECT_DESC_ENG'] = str_replace(['&nbsp;', '&amp;', '&ndash;'], ' ', $res[$i]['OBJECT_DESC_ENG']);
+            // $res[$i]['OBJECT_ADDRESS'] = strip_tags($res[$i]['OBJECT_ADDRESS']);
+            // $res[$i]['OBJECT_DESC'] = strip_tags($res[$i]['OBJECT_DESC']);
+            // $res[$i]['OBJECT_DESC_ENG'] = strip_tags($res[$i]['OBJECT_DESC_ENG']);
+        }
+
+        return $res;
+    }
+
     // helper function to make HTTP request
     public static function curl(string $method, string $url, string $formEncoded) {
         // return $url;
