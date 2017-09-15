@@ -14,18 +14,18 @@ class ProductController extends Controller {
 
     public function getProductsByStore(Request $request) {
     	//retrieve all products based on store
-    	$products = Store::where('airport_code', '=', $request->airport_code)
+    	$store = Store::where('airport_code', '=', $request->airport_code)
                     ->where('name', '=', $request->store_name)
                     ->with('products')
                     ->get();
 
-        foreach($products as $product) {
-            $product->name = ucwords($product->name);
-        }
+        // foreach($products as $product) {
+        //     $product->name = ucwords($product->name);
+        // }
 
     	return Response::json(array(
     		'error'=> false,
-    		'products'=> $products->toArray()),
+    		'products'=> $store->toArray()[0]['products']),
     		200
     	);
     }
