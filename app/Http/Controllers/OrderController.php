@@ -131,14 +131,10 @@ class OrderController extends Controller {
     public function updateDeliveryStatus(Request $request){
         $order = Order::find($request->id);
         $user = User::find($order->customer_id);
-        $phone = $user->phone_number;
         $order->order_status = 3;
         $order->save();
-        if ($order->order_type != "mobile"){
-            return redirect()->action('SMSController@sendMessage', ['text' => "[PAYAKUMBUH]\nStatus pesanan Anda:\nSedang dalam pengiriman", 'phone' => $phone ]);
-        } else {
-            return 'Pesanan sedang dikirim';    
-        }
+        return 'Pesanan sedang dikirim';    
+        
         // return redirect(); buat SMS
     }
 
