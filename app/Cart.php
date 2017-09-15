@@ -12,7 +12,4 @@ class Cart extends Model
     	return $this->belongsTo('App\Product', 'product_id');
     }
 
-    public function unit() {
-    	return $this->belongsTo('App\Unit', 'unit_id');
-    }
 }
