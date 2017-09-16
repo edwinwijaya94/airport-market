@@ -17,10 +17,6 @@ class Order extends Model
     	return $this->hasOne('App\User');
     }
 
-    public function store() {
-        return $this->belongsTo('App\Store');
-    }
-
     public function shopper() {
     	return $this->hasOne('App\Shopper');
     }
@@ -30,7 +26,11 @@ class Order extends Model
     }
 
     public function user() {
-        return $this->belongsTo('App\User', 'customer_id')->select('name', 'address', 'phone_number', 'address_note');
+        return $this->belongsTo('App\User', 'customer_id')->select('name', 'email', 'phone_number');
+    }
+
+    public function store(){
+        return $this->belongsTo('App\Store', 'store_id')->select('name');   
     }
 
     public function getUpdatedAtAttribute($date) {

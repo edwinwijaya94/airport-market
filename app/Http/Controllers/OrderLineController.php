@@ -58,7 +58,6 @@ class OrderLineController extends Controller
             $order->save();
         }
         $orderline->price = $request->price;
-        $orderline->is_available = true;
         $orderline->save();        
 
         return 'Berhasil Update';

@@ -124,7 +124,7 @@ class UserController extends Controller
         $user->name = strtolower($request->name);
         $user->role_id = 2;
         $user->username = strtolower($request->username);
-        $user->address = $request->address;
+        $user->email = $request->email;
         $user->phone_number = $request->phone;
         $user->password = $request->password;
         $user->save();
@@ -149,7 +149,8 @@ class UserController extends Controller
                             ->first();
             return Response::json(array(
                 'error'=>false,
-                'shopper_id'=>$shopper->id),
+                'shopper_id'=>$shopper->id,
+                'email'=>$shopper->email),
                 200
             );
         } else {

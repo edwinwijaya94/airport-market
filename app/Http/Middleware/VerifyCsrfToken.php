@@ -13,14 +13,14 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
         //Add order and order line
-    	'api/virtualmarket/order/add',
-    	'api/virtualmarket/order/add/*',
-        'api/virtualmarket/rating/add',
-        'api/virtualmarket/feedback/add',
-        'api/virtualmarket/orderline/*',
-        'api/virtualmarket/user/edit',
-        'api/virtualmarket/garendong/register',
-        'api/virtualmarket/cart/add',
-        'api/virtualmarket/cart/edit',
+    	'api/order/add',
+    	'api/order/add/*',
+        'api/rating/add',
+        'api/feedback/add',
+        'api/orderline/*',
+        'api/user/edit',
+        'api/shopper/register',
+        'api/cart/add',
+        'api/cart/edit',
     ];
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
-use App\Garendong;
+use App\Shopper;
 use App\User;
 use Phpml\Clustering\KMeans;
 use Illuminate\Http\Request;
@@ -17,13 +17,13 @@ class AllocationController extends Controller {
 		$orders = Order::all();
 
 		foreach ($orders as $order) {
-            $minAllocation = Garendong::min('number_of_allocation');
-            $garendong = Garendong::where('number_of_allocation', '=', $minAllocation)
+            $minAllocation = Shopper::min('number_of_allocation');
+            $garendong = Shopper::where('number_of_allocation', '=', $minAllocation)
                                     ->limit(1)
                                     ->get();
-			if($order->garendong_id == 0){
-				$order->garendong_id = $garendong[0]->id;
-                $allocatedGarendong = Garendong::find($garendong[0]->id);
+			if($order->shopper_id == 0){
+				$order->shopper_id = $garendong[0]->id;
+                $allocatedGarendong = Shopper::find($garendong[0]->id);
                 $allocatedGarendong->number_of_allocation++;
                 $allocatedGarendong->save();
                 $order->order_status = 2;   

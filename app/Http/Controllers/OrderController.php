@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\User;
-use App\Garendong;
+use App\Shopper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Response;
@@ -111,7 +111,7 @@ class OrderController extends Controller {
 
         $numberAllocation = Order::where('shopper_id', '=', $id)
                                 ->count();
-        $garendong = Garendong::find($id);
+        $garendong = Shopper::find($id);
         if ($garendong->number_of_allocation == 0){
             $garendong->number_of_allocation += $numberAllocation;
             $garendong->save();
@@ -124,6 +124,10 @@ class OrderController extends Controller {
         foreach($order as $item){
             $item = $item->user;
         }
+
+        foreach($order as $items){
+            $items = $items->store;
+        }        
 
         return response()->json($order);
     }
