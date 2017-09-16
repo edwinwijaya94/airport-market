@@ -64,7 +64,7 @@ Route::post('/orderline/updateStatus', 'OrderLineController@updateStatus');
 Route::post('/orderline/add', 'OrderLineController@addOrderLine');
 
 //Route for Cart
-Route::post('/cart', 'CartController@getCartByUserID');
+Route::get('/cart', 'CartController@getCartByUserID');
 Route::post('/cart/add', 'CartController@addCart');
 Route::post('/cart/edit', 'CartController@editCartyByID');
 Route::post('/cart/edit/priority', 'CartController@editPriorityByID');
